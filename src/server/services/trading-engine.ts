@@ -53,9 +53,8 @@ export function calculateTrade(
 ): TradeResult {
     const k = pool.yes * pool.no;
 
-    // Initial YES probability
-    const initialYesProb = pool.yes / (pool.yes + pool.no);
-    const initialPrice = side === 'YES' ? initialYesProb : 1 - initialYesProb;
+    // Initial YES price as percentage (0-100)
+    const initialYesPrice = Math.round((pool.yes / (pool.yes + pool.no)) * 100);
 
     let newYes: number, newNo: number, shares: number;
 
@@ -72,7 +71,13 @@ export function calculateTrade(
     // Always return YES probability as the price
     const newYesPrice = Math.round((newYes / (newYes + newNo)) * 100);
 
-    // Slippage calculation
+    // Slippage calculation: (Execution Price - Initial Price) / Initial Price
+    // Initial Price (marginal) = pool.yes / pool.no (if buying YES)
+    // Execution Price = amount / shares
+    const initialPrice = side === 'YES'
+        ? pool.yes / pool.no
+        : pool.no / pool.yes;
+
     const executionPrice = amount / shares;
     const slippage = Math.abs(executionPrice - initialPrice) / initialPrice;
 

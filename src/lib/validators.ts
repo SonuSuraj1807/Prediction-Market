@@ -5,10 +5,10 @@ import { CATEGORIES, REGIONS, MAX_TRADE_SIZE, MIN_TRADE_SIZE } from './constants
 export const RegisterSchema = z.object({
     displayName: z.string().min(2).max(30),
     ageConfirmed: z.literal(true, {
-        errorMap: () => ({ message: 'You must confirm you are 18 or older' }),
+        message: 'You must confirm you are 18 or older',
     }),
     consentGiven: z.literal(true, {
-        errorMap: () => ({ message: 'You must agree to the privacy policy' }),
+        message: 'You must agree to the privacy policy',
     }),
     referralCode: z.string().optional(),
 });

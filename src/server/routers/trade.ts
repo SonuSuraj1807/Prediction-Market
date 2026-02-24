@@ -1,6 +1,7 @@
 import { router, protectedProcedure } from '../trpc';
 import { z } from 'zod';
 import { TradeInputSchema, SellInputSchema } from '@/lib/validators';
+import { TRPCError } from '@trpc/server';
 
 export const tradeRouter = router({
     /**
@@ -17,7 +18,16 @@ export const tradeRouter = router({
                 p_amount: input.amount,
             });
 
-            if (error) throw error;
+            if (error) {
+                // Surface slippage and balance errors clearly to the user
+                if (error.message.includes('slippage')) {
+                    throw new TRPCError({ code: 'BAD_REQUEST', message: error.message });
+                }
+                if (error.message.includes('balance')) {
+                    throw new TRPCError({ code: 'BAD_REQUEST', message: 'Insufficient PRED balance.' });
+                }
+                throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message });
+            }
             return data;
         }),
 
@@ -35,7 +45,12 @@ export const tradeRouter = router({
                 p_shares: input.shares,
             });
 
-            if (error) throw error;
+            if (error) {
+                throw new TRPCError({
+                    code: 'BAD_REQUEST',
+                    message: error.message.includes('shares') ? 'Insufficient shares.' : error.message
+                });
+            }
             return data;
         }),
 

@@ -57,6 +57,29 @@ BEGIN
   -- Always calculate yes_price consistently (probability of YES outcome)
   v_new_price := ROUND((v_new_yes::FLOAT / (v_new_yes + v_new_no)) * 100)::INTEGER;
 
+  -- Slippage calculation: (Execution Price - Initial Price) / Initial Price
+  -- Initial Price (marginal) = pool.yes / pool.no (if buying YES)
+  -- Execution Price = amount / shares
+  DECLARE
+    v_initial_marginal_price FLOAT;
+    v_execution_price FLOAT;
+    v_slippage FLOAT;
+  BEGIN
+    IF p_side = 'YES' THEN
+      v_initial_marginal_price := v_market.yes_pool::FLOAT / v_market.no_pool;
+    ELSE
+      v_initial_marginal_price := v_market.no_pool::FLOAT / v_market.yes_pool;
+    END IF;
+
+    v_execution_price := p_amount::FLOAT / v_shares;
+    v_slippage := ABS(v_execution_price - v_initial_marginal_price) / v_initial_marginal_price;
+
+    -- Guard: reject trades with >20% slippage (consistent with MAX_SLIPPAGE)
+    IF v_slippage > 0.20 THEN
+      RAISE EXCEPTION 'Trade would cause % %% slippage. Max allowed: 20%%', ROUND(v_slippage * 100);
+    END IF;
+  END;
+
   -- Guard: price must stay within bounds
   IF v_new_price < 1 OR v_new_price > 99 THEN
     RAISE EXCEPTION 'Trade would push price outside 1-99 bounds';
@@ -163,6 +186,7 @@ BEGIN
   -- Always return yes_price consistently
   v_new_price := ROUND((v_new_yes::FLOAT / (v_new_yes + v_new_no)) * 100)::INTEGER;
 
+  -- Slippage/Price Stability Guard: ensures sells don't collapse the pool
   IF v_new_price < 1 OR v_new_price > 99 THEN
     RAISE EXCEPTION 'Sell would push price outside 1-99 bounds';
   END IF;
