@@ -5,6 +5,8 @@ import { createClient } from '@/lib/supabase/client';
 import { APP_NAME } from '@/lib/constants';
 
 export default function LoginPage() {
+    const [email, setEmail] = useState('');
+    const [emailSent, setEmailSent] = useState(false);
     const [phone, setPhone] = useState('');
     const [otp, setOtp] = useState('');
     const [step, setStep] = useState<'phone' | 'otp'>('phone');
@@ -14,11 +16,28 @@ export default function LoginPage() {
 
     const handleGoogleLogin = async () => {
         setLoading(true);
+        setError('');
         const { error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: { redirectTo: `${window.location.origin}/markets` },
         });
         if (error) setError(error.message);
+        setLoading(false);
+    };
+
+    const handleEmailLogin = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        setError('');
+        const { error } = await supabase.auth.signInWithOtp({
+            email,
+            options: { emailRedirectTo: `${window.location.origin}/markets` },
+        });
+        if (error) {
+            setError(error.message);
+        } else {
+            setEmailSent(true);
+        }
         setLoading(false);
     };
 
@@ -86,7 +105,42 @@ export default function LoginPage() {
                             <div className="w-full border-t border-gray-700" />
                         </div>
                         <div className="relative flex justify-center text-sm">
-                            <span className="px-4 bg-gray-900/50 text-gray-500">or use phone</span>
+                            <span className="px-4 bg-gray-900 shadow-none text-gray-500">or use email</span>
+                        </div>
+                    </div>
+
+                    {!emailSent ? (
+                        <form onSubmit={handleEmailLogin} className="space-y-4">
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="Enter your email"
+                                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                required
+                            />
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="w-full py-3 bg-indigo-600 text-white rounded-xl font-medium hover:bg-indigo-500 transition-all disabled:opacity-50"
+                            >
+                                {loading ? 'Sending...' : 'Send Magic Link'}
+                            </button>
+                        </form>
+                    ) : (
+                        <div className="text-center space-y-2 py-4">
+                            <p className="text-emerald-400 font-bold">Magic link sent!</p>
+                            <p className="text-xs text-gray-500">Check your email to login.</p>
+                            <button onClick={() => setEmailSent(false)} className="text-xs text-indigo-400 hover:underline">Resend</button>
+                        </div>
+                    )}
+
+                    <div className="relative">
+                        <div className="absolute inset-0 flex items-center">
+                            <div className="w-full border-t border-gray-700" />
+                        </div>
+                        <div className="relative flex justify-center text-sm">
+                            <span className="px-4 bg-gray-900 shadow-none text-gray-500">or use phone</span>
                         </div>
                     </div>
 
@@ -106,7 +160,7 @@ export default function LoginPage() {
                             <button
                                 onClick={handleSendOtp}
                                 disabled={phone.length !== 10 || loading}
-                                className="w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-medium hover:from-indigo-500 hover:to-purple-500 transition-all disabled:opacity-50"
+                                className="w-full py-3 bg-gray-800 text-white rounded-xl font-medium hover:bg-gray-700 transition-all disabled:opacity-50"
                             >
                                 {loading ? 'Sending...' : 'Send OTP'}
                             </button>
@@ -137,7 +191,7 @@ export default function LoginPage() {
                     )}
 
                     {error && (
-                        <p className="text-red-400 text-sm text-center">{error}</p>
+                        <p className="text-red-400 text-sm text-center font-bold px-2 py-2 bg-red-400/10 rounded-lg">{error}</p>
                     )}
                 </div>
 
