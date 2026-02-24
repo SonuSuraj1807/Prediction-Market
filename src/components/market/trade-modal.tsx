@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { trpc } from '@/utils/trpc';
 import { Modal } from '@/components/ui/Modal';
 import { Button } from '@/components/ui/Button';
-import { formatPred, formatPercent } from '@/lib/utils';
-import { TrendingUp, TrendingDown, AlertCircle } from 'lucide-react';
+import { formatPercent } from '@/lib/utils';
+import { TrendingUp, AlertCircle } from 'lucide-react';
 
 interface TradeModalProps {
     isOpen: boolean;
@@ -22,8 +22,6 @@ interface TradeModalProps {
 export function TradeModal({ isOpen, onClose, market }: TradeModalProps) {
     const [side, setSide] = useState<'YES' | 'NO'>('YES');
     const [amount, setAmount] = useState<number>(10);
-    const [slippageEst, setSlippageEst] = useState<number>(0);
-    const [sharesEst, setSharesEst] = useState<number>(0);
     const [isSuccess, setIsSuccess] = useState(false);
 
     // tRPC utils
@@ -36,12 +34,10 @@ export function TradeModal({ isOpen, onClose, market }: TradeModalProps) {
         },
     });
 
-    // Simple local slippage estimation (matching server logic)
-    useEffect(() => {
+    // Memoized trade estimation (replaces useEffect to avoid cascading renders)
+    const { slippageEst, sharesEst } = React.useMemo(() => {
         if (!amount || amount <= 0) {
-            setSlippageEst(0);
-            setSharesEst(0);
-            return;
+            return { slippageEst: 0, sharesEst: 0 };
         }
 
         const k = market.yes_pool * market.no_pool;
@@ -64,8 +60,10 @@ export function TradeModal({ isOpen, onClose, market }: TradeModalProps) {
         const executionPrice = amount / shares;
         const slippage = Math.abs(executionPrice - initialPrice) / initialPrice;
 
-        setSlippageEst(slippage);
-        setSharesEst(Math.floor(shares));
+        return {
+            slippageEst: slippage,
+            sharesEst: Math.floor(shares)
+        };
     }, [amount, side, market]);
 
     const handleTrade = (e: React.FormEvent) => {

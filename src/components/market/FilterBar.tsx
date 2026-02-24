@@ -3,7 +3,7 @@
 import React from 'react';
 import { CATEGORIES, REGIONS } from '@/lib/constants';
 import { CATEGORY_DISPLAY, REGION_DISPLAY } from '@/lib/utils';
-import { Search, Filter, Globe } from 'lucide-react';
+import { Search, Globe } from 'lucide-react';
 
 import { Category, Region } from '@/lib/constants';
 
@@ -14,7 +14,7 @@ interface FilterBarProps {
         search?: string;
         status?: 'open' | 'closed' | 'resolved';
     };
-    setFilters: (filters: any) => void;
+    setFilters: (filters: { category?: Category; region?: Region; search?: string; status?: 'open' | 'closed' | 'resolved' }) => void;
 }
 
 export function FilterBar({ filters, setFilters }: FilterBarProps) {
@@ -75,7 +75,7 @@ export function FilterBar({ filters, setFilters }: FilterBarProps) {
                     <select
                         className="block w-full pl-10 pr-4 py-2 bg-gray-900 border border-gray-800 rounded-xl text-sm font-bold text-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 appearance-none cursor-pointer"
                         value={filters.region || ''}
-                        onChange={(e) => setFilters({ ...filters, region: e.target.value || undefined })}
+                        onChange={(e) => setFilters({ ...filters, region: (e.target.value as Region) || undefined })}
                     >
                         <option value="">Global (All Regions)</option>
                         {REGIONS.map((reg) => (

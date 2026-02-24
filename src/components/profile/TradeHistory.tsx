@@ -2,14 +2,14 @@
 
 import React from 'react';
 import { trpc } from '@/utils/trpc';
-import { formatPred, formatDate } from '@/lib/utils';
-import { Loader2, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { formatPred } from '@/lib/utils';
+import { Loader2 } from 'lucide-react';
 
 interface TradeHistoryProps {
     userId: string;
 }
 
-export function TradeHistory({ userId }: TradeHistoryProps) {
+export function TradeHistory({ }: TradeHistoryProps) {
     // We need a query for this. Reusing getPositions or adding a dedicated one.
     // getPositions already exists in tradeRouter. Let's use it for now as it shows active/history positions.
     const { data: positions, isLoading } = trpc.trade.getPositions.useQuery();
@@ -34,7 +34,7 @@ export function TradeHistory({ userId }: TradeHistoryProps) {
         <div className="space-y-4">
             <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest px-2">Active Positions</h3>
             <div className="grid grid-cols-1 gap-3">
-                {positions.map((pos: any) => (
+                {positions.map((pos) => (
                     <div key={pos.id} className="p-5 bg-gray-900 border border-gray-800 rounded-2xl flex items-center justify-between hover:border-gray-700 transition-all group">
                         <div className="space-y-1">
                             <div className="text-white font-bold group-hover:text-indigo-400 transition-colors">

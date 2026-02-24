@@ -5,7 +5,7 @@ import { trpc } from '@/utils/trpc';
 import { CreateMarketForm } from '@/components/admin/CreateMarketForm';
 import { Button } from '@/components/ui/Button';
 import { formatDate, formatPercent } from '@/lib/utils';
-import { Plus, X, CheckCircle2, History } from 'lucide-react';
+import { Plus, X, CheckCircle2 } from 'lucide-react';
 
 export default function AdminMarketsPage() {
     const [isFormOpen, setIsFormOpen] = useState(false);
@@ -94,8 +94,8 @@ export default function AdminMarketsPage() {
                                         </td>
                                         <td className="px-6 py-4">
                                             <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase ${market.status === 'open' ? 'bg-green-500/10 text-green-500' :
-                                                    market.status === 'closed' ? 'bg-yellow-500/10 text-yellow-500' :
-                                                        'bg-blue-500/10 text-blue-500'
+                                                market.status === 'closed' ? 'bg-yellow-500/10 text-yellow-500' :
+                                                    'bg-blue-500/10 text-blue-500'
                                                 }`}>
                                                 {market.status}
                                             </span>

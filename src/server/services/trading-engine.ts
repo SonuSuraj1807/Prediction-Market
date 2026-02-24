@@ -53,9 +53,6 @@ export function calculateTrade(
 ): TradeResult {
     const k = pool.yes * pool.no;
 
-    // Initial YES price as percentage (0-100)
-    const initialYesPrice = Math.round((pool.yes / (pool.yes + pool.no)) * 100);
-
     let newYes: number, newNo: number, shares: number;
 
     if (side === 'YES') {

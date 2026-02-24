@@ -7,7 +7,7 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { ProfileStats } from '@/components/profile/ProfileStats';
 import { TradeHistory } from '@/components/profile/TradeHistory';
-import { User, Loader2, Calendar, ShieldCheck } from 'lucide-react';
+import { Loader2, Calendar, ShieldCheck } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 
 export default function ProfilePage() {

@@ -1,8 +1,10 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react'; // These imports are still necessary for the hook's functionality
 import { createClient } from '@/lib/supabase/client';
 import type { Database } from '@/lib/supabase/types';
+// The 'Loader2' import from 'lucide-react' was in the provided snippet but is not used in the current code.
+// If it was intended to be used, it should be added. For now, I'll keep the original imports as they are used.
 
 type User = Database['public']['Tables']['users']['Row'];
 
@@ -18,27 +20,35 @@ export function useAuth() {
                 .from('users')
                 .select('*')
                 .eq('id', session.user.id)
-                .single();
+                .single(); // Kept .single() as it's crucial for the data type.
             setUser(data);
         } else {
             setUser(null);
         }
-        setLoading(false);
     }, [supabase]);
 
     useEffect(() => {
-        fetchUser();
+        let mounted = true;
+
+        const init = async () => {
+            await fetchUser();
+            if (mounted) setLoading(false);
+        };
+        init();
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
             if (session?.user) {
                 fetchUser();
             } else {
                 setUser(null);
-                setLoading(false);
+                if (mounted) setLoading(false);
             }
         });
 
-        return () => subscription.unsubscribe();
+        return () => {
+            mounted = false;
+            subscription.unsubscribe();
+        };
     }, [fetchUser, supabase]);
 
     const signOut = async () => {

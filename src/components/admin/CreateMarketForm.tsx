@@ -2,14 +2,14 @@
 
 import React, { useState } from 'react';
 import { trpc } from '@/utils/trpc';
-import { CATEGORIES, REGIONS } from '@/lib/constants';
+import { Category, Region, CATEGORIES, REGIONS } from '@/lib/constants';
 import { Button } from '@/components/ui/Button';
 
 export function CreateMarketForm({ onSuccess }: { onSuccess: () => void }) {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [category, setCategory] = useState(CATEGORIES[0]);
-    const [region, setRegion] = useState(REGIONS[0]);
+    const [category, setCategory] = useState<Category>(CATEGORIES[0]);
+    const [region, setRegion] = useState<Region>(REGIONS[0]);
     const [resolvesAt, setResolvesAt] = useState('');
     const [isFeatured, setIsFeatured] = useState(false);
 
@@ -63,7 +63,7 @@ export function CreateMarketForm({ onSuccess }: { onSuccess: () => void }) {
                     <label className="block text-sm font-medium text-gray-400 mb-1">Category</label>
                     <select
                         value={category}
-                        onChange={(e) => setCategory(e.target.value as any)}
+                        onChange={(e) => setCategory(e.target.value as Category)}
                         className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     >
                         {CATEGORIES.map((c) => (
@@ -75,7 +75,7 @@ export function CreateMarketForm({ onSuccess }: { onSuccess: () => void }) {
                     <label className="block text-sm font-medium text-gray-400 mb-1">Region</label>
                     <select
                         value={region}
-                        onChange={(e) => setRegion(e.target.value as any)}
+                        onChange={(e) => setRegion(e.target.value as Region)}
                         className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     >
                         {REGIONS.map((r) => (
