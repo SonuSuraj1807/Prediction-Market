@@ -12,8 +12,10 @@ export default defineConfig({
         trace: 'on-first-retry',
     },
     projects: [
-        { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
-        { name: 'mobile', use: { ...devices['Pixel 5'] } },
+        {
+            name: 'Google Chrome',
+            use: { ...devices['Desktop Chrome'], channel: 'chrome' },
+        },
     ],
     webServer: {
         command: 'npm run dev',

@@ -25,6 +25,14 @@ export const metadata: Metadata = {
   description: APP_DESCRIPTION,
   keywords: ['prediction market', 'trading', 'forecasting', 'virtual currency', 'events'],
   authors: [{ name: APP_NAME }],
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: APP_NAME,
+  },
+  formatDetection: {
+    telephone: false,
+  },
   openGraph: {
     type: 'website',
     locale: 'en_IN',

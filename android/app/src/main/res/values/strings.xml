@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Eventix</string>
+    <string name="title_activity_main">Eventix</string>
+    <string name="package_name">com.eventix.app</string>
+    <string name="custom_url_scheme">com.eventix.app</string>
+</resources>
