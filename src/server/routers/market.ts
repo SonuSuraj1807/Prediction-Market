@@ -14,7 +14,13 @@ export const marketRouter = router({
                 .select('*', { count: 'exact' });
 
             if (input.category) query = query.eq('category', input.category);
-            if (input.region) query = query.eq('region', input.region);
+            if (input.region) {
+                if (input.region === 'global') {
+                    query = query.eq('region', 'global');
+                } else {
+                    query = query.or(`region.eq.${input.region},region.eq.global`);
+                }
+            }
             if (input.status) query = query.eq('status', input.status);
             if (input.search) query = query.ilike('title', `%${input.search}%`);
 
