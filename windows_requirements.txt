@@ -1,0 +1,39 @@
+# Windows Requirements for Prediction Market (Eventix)
+
+To run this project on Windows, you will need to install and configure the following tools:
+
+## 1. Core Development Tools
+- Node.js (LTS): Version 20.x or later (Download: https://nodejs.org/)
+- Git: Required for version control (Download: https://git-scm.com/)
+- VS Code: Recommended editor for Next.js/React development.
+
+## 2. Backend & Database (Supabase)
+- Supabase Project: Create an account and project at https://supabase.com/
+- Supabase CLI (Optional): For local development and migrations.
+  Install via PowerShell: npm install supabase --save-dev
+
+## 3. Mobile Development (Android)
+- Android Studio: For building and running the Android app via Capacitor.
+- Android SDK: Set up within Android Studio.
+- JDK 17: Required for Gradle (ensure JAVA_HOME is set to JDK 17).
+
+## 4. Initial Setup Steps
+1. Clone the repository:
+   git clone <repository-url>
+   cd Prediction-Market
+
+2. Install dependencies:
+   npm install
+
+3. Environment Configuration:
+   - Create a file named .env.local in the root folder.
+   - You can do this via terminal:
+     (CMD): copy .env.example .env.local
+     (PowerShell): cp .env.example .env.local
+   - Copy keys from .env.example and add your Supabase URL, Anon Key, and other credentials.
+
+4. Run the Development Server:
+   npm run dev
+
+## Recommendation
+Using WSL 2 (Windows Subsystem for Linux) with Ubuntu is highly recommended for a better development experience with Node.js and Next.js on Windows.
