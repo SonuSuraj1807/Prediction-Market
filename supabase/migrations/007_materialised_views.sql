@@ -2,6 +2,8 @@
 -- 007_materialised_views.sql — Leaderboard view + refresh
 -- ============================================================
 
+DROP MATERIALIZED VIEW IF EXISTS leaderboard CASCADE;
+
 CREATE MATERIALIZED VIEW leaderboard AS
   SELECT
     id AS user_id,

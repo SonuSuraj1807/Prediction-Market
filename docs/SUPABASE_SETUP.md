@@ -39,9 +39,14 @@ You need to apply the schema and functions to your database.
 
 ## 4. Set Up Authentication
 1. Go to **Authentication** > **Providers**.
-2. Ensure **Email** is enabled.
-3. (Optional) Enable **Google** or other providers if you plan to use them.
-4. Under **Authentication** > **URL Configuration**, set the `Site URL` to your local development URL (e.g., `http://localhost:3000`).
+2. **Email**: Ensure it is enabled.
+3. **Google**:
+   - Toggle to **Enabled**.
+   - You will need a **Client ID** and **Client Secret**. Follow the **[Google Cloud Setup Guide](./GOOGLE_CLOUD_SETUP.md)** to get these.
+   - In Google Cloud Console, add the **Callback URL** provided by Supabase (it looks like `https://your-project.supabase.co/auth/v1/callback`).
+4. **URL Configuration**:
+   - Under **Authentication** > **URL Configuration**, set the `Site URL` to `http://localhost:3000`.
+   - Add `http://localhost:3000/**` to the **Redirect URLs** list.
 
 ## 5. Start Development
 Now that the database is ready and connected, you can run the app locally:
