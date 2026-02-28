@@ -91,4 +91,26 @@ export const tradeRouter = router({
         if (error) throw error;
         return data ?? [];
     }),
+
+    /**
+     * Get user's trade activity (history).
+     */
+    getActivity: publicProcedure
+        .input(z.object({ userId: z.string().uuid(), limit: z.number().min(1).max(100).default(20) }))
+        .query(async ({ ctx, input }) => {
+            const { data, error } = await ctx.supabase
+                .from('trades')
+                .select(`
+                    *,
+                    markets:market_id (
+                        title
+                    )
+                `)
+                .eq('user_id', input.userId)
+                .order('created_at', { ascending: false })
+                .limit(input.limit);
+
+            if (error) throw error;
+            return data ?? [];
+        }),
 });

@@ -2,17 +2,15 @@
 
 import React from 'react';
 import { trpc } from '@/utils/trpc';
-import { formatPred } from '@/lib/utils';
-import { Loader2 } from 'lucide-react';
+import { formatPred, formatDate } from '@/lib/utils';
+import { Loader2, ArrowUpRight, ArrowDownRight } from 'lucide-react';
 
 interface TradeHistoryProps {
     userId: string;
 }
 
-export function TradeHistory({ }: TradeHistoryProps) {
-    // We need a query for this. Reusing getPositions or adding a dedicated one.
-    // getPositions already exists in tradeRouter. Let's use it for now as it shows active/history positions.
-    const { data: positions, isLoading } = trpc.trade.getPositions.useQuery();
+export function TradeHistory({ userId }: TradeHistoryProps) {
+    const { data: activity, isLoading } = trpc.trade.getActivity.useQuery({ userId });
 
     if (isLoading) {
         return (
@@ -22,41 +20,60 @@ export function TradeHistory({ }: TradeHistoryProps) {
         );
     }
 
-    if (!positions || positions.length === 0) {
+    if (!activity || activity.length === 0) {
         return (
             <div className="p-12 text-center bg-gray-900/40 border border-gray-800 rounded-3xl">
-                <p className="text-gray-500 font-medium italic">No active positions yet.</p>
+                <p className="text-gray-500 font-medium italic">No recent activity.</p>
             </div>
         );
     }
 
     return (
-        <div className="space-y-4">
-            <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest px-2">Active Positions</h3>
-            <div className="grid grid-cols-1 gap-3">
-                {positions.map((pos) => (
-                    <div key={pos.id} className="p-5 bg-gray-900 border border-gray-800 rounded-2xl flex items-center justify-between hover:border-gray-700 transition-all group">
-                        <div className="space-y-1">
-                            <div className="text-white font-bold group-hover:text-indigo-400 transition-colors">
-                                {pos.markets.title}
-                            </div>
-                            <div className="flex gap-2 text-[10px] font-bold uppercase tracking-tighter">
-                                <span className={pos.side === 'YES' ? 'text-emerald-500' : 'text-rose-500'}>
-                                    {pos.side} • {pos.shares} Shares
+        <div className="overflow-hidden rounded-3xl border border-gray-800 bg-gray-950">
+            <table className="w-full text-left">
+                <thead className="bg-gray-900/50 text-[10px] font-black uppercase tracking-widest text-gray-500 border-b border-gray-800">
+                    <tr>
+                        <th className="px-6 py-4">Event</th>
+                        <th className="px-6 py-4">Action</th>
+                        <th className="px-6 py-4">Price</th>
+                        <th className="px-6 py-4">Amount</th>
+                        <th className="px-6 py-4 text-right">Date</th>
+                    </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-800/50">
+                    {activity.map((trade) => (
+                        <tr key={trade.id} className="hover:bg-gray-900/30 transition-colors group">
+                            <td className="px-6 py-4">
+                                <span className="text-sm font-bold text-white group-hover:text-indigo-400 transition-colors line-clamp-1">
+                                    {trade.markets.title}
                                 </span>
-                                <span className="text-gray-600">|</span>
-                                <span className="text-gray-400">Locked: {formatPred(pos.avg_price * pos.shares / 100)}</span>
-                            </div>
-                        </div>
-                        <div className="text-right">
-                            <div className="text-lg font-black text-white">
-                                {pos.markets.yes_price}%
-                            </div>
-                            <div className="text-[10px] font-bold text-gray-500 uppercase">Current Price</div>
-                        </div>
-                    </div>
-                ))}
-            </div>
+                            </td>
+                            <td className="px-6 py-4">
+                                <div className="flex items-center gap-2">
+                                    {trade.action === 'buy' ? (
+                                        <ArrowUpRight className="w-3 h-3 text-emerald-500" />
+                                    ) : (
+                                        <ArrowDownRight className="w-3 h-3 text-rose-500" />
+                                    )}
+                                    <span className={`text-[10px] font-black uppercase tracking-widest ${trade.action === 'buy' ? 'text-emerald-500' : 'text-rose-500'
+                                        }`}>
+                                        {trade.action} {trade.side}
+                                    </span>
+                                </div>
+                            </td>
+                            <td className="px-6 py-4">
+                                <span className="text-sm font-bold text-gray-300">{trade.price}¢</span>
+                            </td>
+                            <td className="px-6 py-4">
+                                <span className="text-sm font-black text-white">{formatPred(trade.cost)}</span>
+                            </td>
+                            <td className="px-6 py-4 text-right">
+                                <span className="text-xs font-bold text-gray-500 uppercase">{formatDate(trade.created_at)}</span>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 }

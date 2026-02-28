@@ -7,10 +7,9 @@ import { TrendingUp, BarChart3, Target, Zap } from 'lucide-react';
 interface ProfileStatsProps {
     stats: {
         tradesCount: number;
-        // For now these are mock/placeholders as requested in implementation plan
-        winRate?: number;
-        totalProfit?: number;
-        accuracy?: number;
+        winRate: number;
+        totalProfit: number;
+        accuracy: number;
     };
 }
 
@@ -18,7 +17,7 @@ export function ProfileStats({ stats }: ProfileStatsProps) {
     const displayStats = [
         {
             label: 'Accuracy',
-            value: formatPercent(stats.accuracy ?? 68),
+            value: formatPercent(stats.accuracy),
             icon: Target,
             color: 'text-emerald-400',
             bg: 'bg-emerald-500/10',
@@ -32,14 +31,14 @@ export function ProfileStats({ stats }: ProfileStatsProps) {
         },
         {
             label: 'Win Rate',
-            value: formatPercent(stats.winRate ?? 54),
-            icon: zapIcon, // Fix: local variable zapIcon or just Zap
+            value: formatPercent(stats.winRate),
+            icon: Zap,
             color: 'text-purple-400',
             bg: 'bg-purple-500/10',
         },
         {
             label: 'Net Profit',
-            value: formatPred(stats.totalProfit ?? 1250),
+            value: formatPred(stats.totalProfit),
             icon: TrendingUp,
             color: 'text-blue-400',
             bg: 'bg-blue-500/10',
@@ -64,5 +63,3 @@ export function ProfileStats({ stats }: ProfileStatsProps) {
         </div>
     );
 }
-
-const zapIcon = Zap; // Helper for mapping
