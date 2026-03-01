@@ -10,6 +10,7 @@ import {
     Tooltip,
     ResponsiveContainer,
 } from 'recharts';
+import { useTheme } from '@/components/theme-provider';
 
 const mockData = [
     { name: 'Mon', value: 1000 },
@@ -22,12 +23,21 @@ const mockData = [
 ];
 
 export function PortfolioChart() {
+    const { theme } = useTheme();
+
+    // Chart colors based on theme
+    const chartColor = theme === 'light' ? '#4f46e5' : '#818cf8';
+    const gridColor = theme === 'light' ? '#e5e7eb' : '#1f2937';
+    const tickColor = theme === 'light' ? '#6b7280' : '#4b5563';
+    const tooltipBg = theme === 'light' ? '#ffffff' : '#111827';
+    const tooltipBorder = theme === 'light' ? '#e5e7eb' : '#374151';
+
     return (
-        <div className="w-full h-[300px] bg-gray-900/30 border border-gray-800/50 rounded-[3rem] p-8 overflow-hidden">
+        <div className="w-full h-[300px] bg-surface-raised border border-border/50 rounded-[3rem] p-8 overflow-hidden transition-colors">
             <div className="flex items-center justify-between mb-8">
                 <div>
-                    <h3 className="text-white font-black uppercase tracking-tighter text-lg">Portfolio Value</h3>
-                    <p className="text-gray-500 text-xs font-bold uppercase tracking-widest">Last 7 Days (PRED)</p>
+                    <h3 className="text-text font-black uppercase tracking-tighter text-lg">Portfolio Value</h3>
+                    <p className="text-text-muted text-xs font-bold uppercase tracking-widest">Last 7 Days (PRED)</p>
                 </div>
                 <div className="px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl">
                     <span className="text-emerald-500 font-black text-sm">↑ 145%</span>
@@ -39,34 +49,34 @@ export function PortfolioChart() {
                     <AreaChart data={mockData}>
                         <defs>
                             <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#6366f1" stopOpacity={0.3} />
-                                <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
+                                <stop offset="5%" stopColor={chartColor} stopOpacity={0.3} />
+                                <stop offset="95%" stopColor={chartColor} stopOpacity={0} />
                             </linearGradient>
                         </defs>
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1f2937" />
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={gridColor} />
                         <XAxis
                             dataKey="name"
                             axisLine={false}
                             tickLine={false}
-                            tick={{ fill: '#4b5563', fontSize: 10, fontWeight: 'bold' }}
+                            tick={{ fill: tickColor, fontSize: 10, fontWeight: 'bold' }}
                             padding={{ left: 20, right: 20 }}
                         />
                         <YAxis hide />
                         <Tooltip
                             contentStyle={{
-                                backgroundColor: '#111827',
-                                border: '1px solid #374151',
+                                backgroundColor: tooltipBg,
+                                border: `1px solid ${tooltipBorder}`,
                                 borderRadius: '1rem',
-                                color: '#fff',
+                                color: theme === 'light' ? '#000' : '#fff',
                                 fontWeight: 'bold'
                             }}
-                            itemStyle={{ color: '#818cf8' }}
-                            labelStyle={{ color: '#9ca3af', marginBottom: '4px' }}
+                            itemStyle={{ color: chartColor }}
+                            labelStyle={{ color: theme === 'light' ? '#6b7280' : '#9ca3af', marginBottom: '4px' }}
                         />
                         <Area
                             type="monotone"
                             dataKey="value"
-                            stroke="#6366f1"
+                            stroke={chartColor}
                             strokeWidth={4}
                             fillOpacity={1}
                             fill="url(#colorValue)"

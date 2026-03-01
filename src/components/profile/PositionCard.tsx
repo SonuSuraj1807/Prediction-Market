@@ -31,7 +31,7 @@ export function PositionCard({ position }: PositionCardProps) {
     return (
         <Link
             href={`/markets/${position.market_id}`}
-            className="p-6 bg-gray-900/50 border border-gray-800 rounded-[2rem] hover:border-indigo-500/30 transition-all group flex flex-col sm:flex-row sm:items-center justify-between gap-6"
+            className="p-6 bg-surface-raised border border-border rounded-[2rem] hover:border-primary/30 transition-all group flex flex-col sm:flex-row sm:items-center justify-between gap-6"
         >
             <div className="space-y-2 flex-1">
                 <div className="flex items-center gap-3">
@@ -39,24 +39,24 @@ export function PositionCard({ position }: PositionCardProps) {
                         }`}>
                         {position.side}
                     </span>
-                    <h3 className="text-white font-bold group-hover:text-indigo-400 transition-colors line-clamp-1">
+                    <h3 className="text-text font-bold group-hover:text-primary transition-colors line-clamp-1">
                         {position.markets.title}
                     </h3>
                 </div>
 
-                <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-gray-500">
+                <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-text-muted">
                     <div>{position.shares} Shares</div>
-                    <div className="w-1.5 h-1.5 rounded-full bg-gray-800" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-border" />
                     <div>Avg {position.avg_price}¢</div>
                 </div>
             </div>
 
-            <div className="flex items-center gap-8 sm:text-right border-t sm:border-t-0 border-gray-800 pt-6 sm:pt-0">
+            <div className="flex items-center gap-8 sm:text-right border-t sm:border-t-0 border-border pt-6 sm:pt-0">
                 <div>
-                    <div className="text-xl font-black text-white">
+                    <div className="text-xl font-black text-text">
                         {formatPred(currentValue)}
                     </div>
-                    <div className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+                    <div className="text-[10px] font-bold text-text-muted uppercase tracking-widest">
                         Market Value
                     </div>
                 </div>

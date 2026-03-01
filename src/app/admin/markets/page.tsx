@@ -28,8 +28,8 @@ export default function AdminMarketsPage() {
         <div className="space-y-8">
             <div className="flex items-center justify-between">
                 <div>
-                    <h2 className="text-2xl font-bold text-white">Market Management</h2>
-                    <p className="text-gray-400">Create, monitor, and resolve prediction markets.</p>
+                    <h2 className="text-2xl font-bold text-text">Market Management</h2>
+                    <p className="text-text-muted">Create, monitor, and resolve prediction markets.</p>
                 </div>
                 <Button
                     onClick={() => setIsFormOpen(!isFormOpen)}
@@ -49,47 +49,47 @@ export default function AdminMarketsPage() {
                 </div>
             )}
 
-            <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden text-white">
+            <div className="bg-surface rounded-xl border border-border overflow-hidden transition-colors">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
                         <thead>
-                            <tr className="bg-gray-800/50 border-b border-gray-800">
-                                <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Market Details</th>
-                                <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Pool / Price</th>
-                                <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Resolves At</th>
-                                <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Status</th>
-                                <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400 text-right">Actions</th>
+                            <tr className="bg-surface-raised border-b border-border">
+                                <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-text-muted">Market Details</th>
+                                <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-text-muted">Pool / Price</th>
+                                <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-text-muted">Resolves At</th>
+                                <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-text-muted">Status</th>
+                                <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-text-muted text-right">Actions</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-800">
+                        <tbody className="divide-y divide-border">
                             {marketsQuery.isLoading ? (
                                 <tr>
-                                    <td colSpan={5} className="px-6 py-12 text-center text-gray-500">Loading markets...</td>
+                                    <td colSpan={5} className="px-6 py-12 text-center text-text-muted">Loading markets...</td>
                                 </tr>
                             ) : marketsQuery.data?.length === 0 ? (
                                 <tr>
-                                    <td colSpan={5} className="px-6 py-12 text-center text-gray-500">No markets found. Create one to get started.</td>
+                                    <td colSpan={5} className="px-6 py-12 text-center text-text-muted">No markets found. Create one to get started.</td>
                                 </tr>
                             ) : (
                                 marketsQuery.data?.map((market) => (
-                                    <tr key={market.id} className="hover:bg-gray-800/30 transition-colors">
+                                    <tr key={market.id} className="hover:bg-primary/5 transition-colors">
                                         <td className="px-6 py-4">
-                                            <div className="font-medium text-white">{market.title}</div>
-                                            <div className="text-xs text-gray-500 mt-1 flex gap-2">
-                                                <span className="bg-gray-800 px-1.5 py-0.5 rounded uppercase">{market.category}</span>
-                                                <span className="bg-gray-800 px-1.5 py-0.5 rounded uppercase">{market.region}</span>
+                                            <div className="font-medium text-text">{market.title}</div>
+                                            <div className="text-xs text-text-muted mt-1 flex gap-2">
+                                                <span className="bg-surface-raised px-1.5 py-0.5 rounded uppercase border border-border">{market.category}</span>
+                                                <span className="bg-surface-raised px-1.5 py-0.5 rounded uppercase border border-border">{market.region}</span>
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="text-sm">
-                                                <span className="text-indigo-400">Y: {market.yes_pool}</span> /
+                                                <span className="text-primary-light">Y: {market.yes_pool}</span> /
                                                 <span className="text-purple-400"> N: {market.no_pool}</span>
                                             </div>
-                                            <div className="text-xs font-bold text-gray-300 mt-1">
+                                            <div className="text-xs font-bold text-text-muted mt-1">
                                                 Price: {formatPercent(market.yes_price)}
                                             </div>
                                         </td>
-                                        <td className="px-6 py-4 text-sm text-gray-400">
+                                        <td className="px-6 py-4 text-sm text-text-muted">
                                             {formatDate(market.resolves_at)}
                                         </td>
                                         <td className="px-6 py-4">
@@ -120,7 +120,7 @@ export default function AdminMarketsPage() {
                                                 </div>
                                             )}
                                             {market.status === 'resolved' && (
-                                                <div className="text-xs text-gray-500 italic">
+                                                <div className="text-xs text-text-muted italic">
                                                     Resolved as {market.resolution}
                                                 </div>
                                             )}

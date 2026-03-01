@@ -12,11 +12,11 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
             <div
                 ref={ref}
                 className={cn(
-                    'rounded-2xl',
-                    variant === 'default' && 'bg-gray-900/60 border border-gray-800',
-                    variant === 'glass' && 'bg-gray-900/30 backdrop-blur-xl border border-gray-700/50',
-                    variant === 'bordered' && 'bg-transparent border-2 border-gray-700',
-                    hover && 'hover:border-indigo-500/50 hover:shadow-lg hover:shadow-indigo-500/5 transition-all duration-300 cursor-pointer',
+                    'rounded-2xl transition-colors duration-300',
+                    variant === 'default' && 'bg-surface-raised border border-border',
+                    variant === 'glass' && 'glass backdrop-blur-xl border border-border/50',
+                    variant === 'bordered' && 'bg-transparent border-2 border-border',
+                    hover && 'hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer',
                     className
                 )}
                 {...props}

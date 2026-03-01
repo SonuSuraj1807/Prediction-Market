@@ -23,14 +23,14 @@ export default function HomePage() {
             </div>
 
             <h1 className="text-5xl sm:text-7xl font-bold tracking-tight animate-slide-up" style={{ animationDelay: '0.1s' }}>
-              <span className="text-white">Predict the</span>
+              <span className="text-text">Predict the</span>
               <br />
-              <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-primary via-purple-400 to-pink-400 bg-clip-text text-transparent">
                 Future of Events
               </span>
             </h1>
 
-            <p className="mt-6 text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto animate-slide-up" style={{ animationDelay: '0.2s' }}>
+            <p className="mt-6 text-lg sm:text-xl text-text-muted max-w-2xl mx-auto animate-slide-up" style={{ animationDelay: '0.2s' }}>
               Trade on elections, sports, tech, and more using virtual PRED coins.
               Compete on leaderboards. Prove your prediction skills.
             </p>
@@ -44,7 +44,7 @@ export default function HomePage() {
               </Link>
               <Link
                 href="/markets"
-                className="px-8 py-4 bg-gray-800/50 border border-gray-700 text-gray-300 rounded-2xl text-lg font-medium hover:bg-gray-800 hover:border-gray-600 transition-all"
+                className="px-8 py-4 bg-surface-raised border border-border text-text-muted rounded-2xl text-lg font-medium hover:bg-surface-higher hover:border-primary/50 transition-all"
               >
                 Browse Markets
               </Link>
@@ -53,25 +53,25 @@ export default function HomePage() {
             {/* Stats */}
             <div className="mt-20 grid grid-cols-3 gap-8 max-w-md mx-auto animate-fade-in" style={{ animationDelay: '0.5s' }}>
               <div>
-                <div className="text-3xl font-bold text-white">1,000</div>
-                <div className="text-sm text-gray-500">Free PRED Coins</div>
+                <div className="text-3xl font-bold text-text">1,000</div>
+                <div className="text-sm text-text-muted">Free PRED Coins</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-white">7+</div>
-                <div className="text-sm text-gray-500">Categories</div>
+                <div className="text-3xl font-bold text-text">7+</div>
+                <div className="text-sm text-text-muted">Categories</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-white">∞</div>
-                <div className="text-sm text-gray-500">Markets</div>
+                <div className="text-3xl font-bold text-text">∞</div>
+                <div className="text-sm text-text-muted">Markets</div>
               </div>
             </div>
           </div>
         </section>
 
         {/* ─── How It Works ─────────────────────────── */}
-        <section className="py-24 border-t border-gray-800">
+        <section className="py-24 border-t border-border">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-center text-white mb-16">
+            <h2 className="text-3xl font-bold text-center text-text mb-16">
               How It Works
             </h2>
 
@@ -98,14 +98,14 @@ export default function HomePage() {
               ].map((item) => (
                 <div
                   key={item.step}
-                  className="relative p-8 bg-gray-900/40 border border-gray-800 rounded-2xl hover:border-indigo-500/30 transition-all duration-300 group"
+                  className="relative p-8 bg-surface-raised/40 border border-border rounded-2xl hover:border-primary/30 transition-all duration-300 group"
                 >
-                  <span className="absolute top-6 right-6 text-5xl font-bold text-gray-800 group-hover:text-indigo-900/30 transition-colors">
+                  <span className="absolute top-6 right-6 text-5xl font-bold text-text-muted/10 group-hover:text-primary/10 transition-colors">
                     {item.step}
                   </span>
-                  <item.icon className="w-10 h-10 text-indigo-400 mb-4" />
-                  <h3 className="text-xl font-semibold text-white mb-2">{item.title}</h3>
-                  <p className="text-gray-400">{item.description}</p>
+                  <item.icon className="w-10 h-10 text-primary mb-4" />
+                  <h3 className="text-xl font-semibold text-text mb-2">{item.title}</h3>
+                  <p className="text-text-muted">{item.description}</p>
                 </div>
               ))}
             </div>
@@ -113,9 +113,9 @@ export default function HomePage() {
         </section>
 
         {/* ─── Features ─────────────────────────────── */}
-        <section className="py-24 border-t border-gray-800 bg-gray-900/30">
+        <section className="py-24 border-t border-border bg-surface-raised/20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-center text-white mb-16">
+            <h2 className="text-3xl font-bold text-center text-text mb-16">
               Why {APP_NAME}?
             </h2>
 
@@ -130,14 +130,14 @@ export default function HomePage() {
               ].map((feature) => (
                 <div
                   key={feature.title}
-                  className="flex items-start gap-4 p-6 rounded-xl hover:bg-gray-800/30 transition-colors"
+                  className="flex items-start gap-4 p-6 rounded-xl hover:bg-surface-higher/50 transition-colors"
                 >
-                  <div className="p-2 bg-indigo-500/10 rounded-lg">
-                    <feature.icon className="w-5 h-5 text-indigo-400" />
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <feature.icon className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-white mb-1">{feature.title}</h3>
-                    <p className="text-sm text-gray-400">{feature.desc}</p>
+                    <h3 className="font-semibold text-text mb-1">{feature.title}</h3>
+                    <p className="text-sm text-text-muted">{feature.desc}</p>
                   </div>
                 </div>
               ))}
@@ -146,12 +146,12 @@ export default function HomePage() {
         </section>
 
         {/* ─── CTA ──────────────────────────────────── */}
-        <section className="py-24 border-t border-gray-800">
+        <section className="py-24 border-t border-border">
           <div className="max-w-3xl mx-auto px-4 text-center">
-            <h2 className="text-4xl font-bold text-white mb-4">
+            <h2 className="text-4xl font-bold text-text mb-4">
               Ready to test your predictions?
             </h2>
-            <p className="text-gray-400 mb-8">
+            <p className="text-text-muted mb-8">
               Join {APP_NAME} today and get 1,000 free PRED coins to start trading.
             </p>
             <Link

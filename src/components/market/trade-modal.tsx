@@ -82,8 +82,8 @@ export function TradeModal({ isOpen, onClose, market }: TradeModalProps) {
                     <div className="w-16 h-16 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mx-auto">
                         <TrendingUp className="w-8 h-8" />
                     </div>
-                    <p className="text-gray-300">
-                        You successfully bought <span className="text-white font-bold">{sharesEst}</span> {side} shares.
+                    <p className="text-text-muted">
+                        You successfully bought <span className="text-text font-bold">{sharesEst}</span> {side} shares.
                     </p>
                     <Button onClick={onClose} className="w-full">Done</Button>
                 </div>
@@ -95,21 +95,21 @@ export function TradeModal({ isOpen, onClose, market }: TradeModalProps) {
         <Modal isOpen={isOpen} onClose={onClose} title="Place Trade">
             <div className="p-6 space-y-6">
                 <div>
-                    <h3 className="text-white font-medium mb-1">{market.title}</h3>
-                    <p className="text-sm text-gray-500">Current YES Price: {formatPercent(market.yes_price)}</p>
+                    <h3 className="text-text font-medium mb-1">{market.title}</h3>
+                    <p className="text-sm text-text-muted">Current YES Price: {formatPercent(market.yes_price)}</p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 p-1 bg-gray-950 rounded-xl border border-gray-800">
+                <div className="grid grid-cols-2 gap-2 p-1 bg-surface rounded-xl border border-border">
                     <button
                         onClick={() => setSide('YES')}
-                        className={`py-2 px-4 rounded-lg font-bold transition-all ${side === 'YES' ? 'bg-emerald-600 text-white shadow-lg' : 'text-gray-500 hover:text-white'
+                        className={`py-2 px-4 rounded-lg font-bold transition-all ${side === 'YES' ? 'bg-emerald-600 text-white shadow-lg' : 'text-text-muted hover:text-text'
                             }`}
                     >
                         YES
                     </button>
                     <button
                         onClick={() => setSide('NO')}
-                        className={`py-2 px-4 rounded-lg font-bold transition-all ${side === 'NO' ? 'bg-rose-600 text-white shadow-lg' : 'text-gray-500 hover:text-white'
+                        className={`py-2 px-4 rounded-lg font-bold transition-all ${side === 'NO' ? 'bg-rose-600 text-white shadow-lg' : 'text-text-muted hover:text-text'
                             }`}
                     >
                         NO
@@ -118,29 +118,29 @@ export function TradeModal({ isOpen, onClose, market }: TradeModalProps) {
 
                 <form onSubmit={handleTrade} className="space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-400 mb-1">Trade Amount (PRED)</label>
+                        <label className="block text-sm font-medium text-text-muted mb-1">Trade Amount (PRED)</label>
                         <div className="relative">
                             <input
                                 type="number"
                                 value={amount}
                                 onChange={(e) => setAmount(Number(e.target.value))}
-                                className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-3 text-white text-xl font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                className="w-full bg-surface border border-border rounded-lg px-4 py-3 text-text text-xl font-bold focus:outline-none focus:ring-2 focus:ring-primary"
                                 min={1}
                                 max={500}
                                 required
                             />
-                            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 font-bold">PRED</span>
+                            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted font-bold">PRED</span>
                         </div>
                     </div>
 
-                    <div className="bg-gray-900/50 p-4 rounded-xl space-y-2 border border-gray-800/50">
+                    <div className="bg-surface-raised p-4 rounded-xl space-y-2 border border-border/50">
                         <div className="flex justify-between text-sm">
-                            <span className="text-gray-400">Estimated Shares</span>
-                            <span className="text-white font-medium">{sharesEst}</span>
+                            <span className="text-text-muted">Estimated Shares</span>
+                            <span className="text-text font-medium">{sharesEst}</span>
                         </div>
                         <div className="flex justify-between text-sm">
-                            <span className="text-gray-400">Price Impact / Slippage</span>
-                            <span className={`font-medium ${slippageEst > 0.15 ? 'text-rose-400' : 'text-indigo-400'}`}>
+                            <span className="text-text-muted">Price Impact / Slippage</span>
+                            <span className={`font-medium ${slippageEst > 0.15 ? 'text-rose-400' : 'text-primary'}`}>
                                 {formatPercent(Math.round(slippageEst * 100))}
                             </span>
                         </div>

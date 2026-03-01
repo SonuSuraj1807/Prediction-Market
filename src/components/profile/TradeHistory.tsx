@@ -15,23 +15,23 @@ export function TradeHistory({ userId }: TradeHistoryProps) {
     if (isLoading) {
         return (
             <div className="flex flex-col items-center justify-center py-20">
-                <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
+                <Loader2 className="w-8 h-8 text-primary animate-spin" />
             </div>
         );
     }
 
     if (!activity || activity.length === 0) {
         return (
-            <div className="p-12 text-center bg-gray-900/40 border border-gray-800 rounded-3xl">
-                <p className="text-gray-500 font-medium italic">No recent activity.</p>
+            <div className="p-12 text-center bg-surface-raised border border-border rounded-3xl">
+                <p className="text-text-muted font-medium italic">No recent activity.</p>
             </div>
         );
     }
 
     return (
-        <div className="overflow-hidden rounded-3xl border border-gray-800 bg-gray-950">
+        <div className="overflow-hidden rounded-3xl border border-border bg-surface">
             <table className="w-full text-left">
-                <thead className="bg-gray-900/50 text-[10px] font-black uppercase tracking-widest text-gray-500 border-b border-gray-800">
+                <thead className="bg-surface-raised text-[10px] font-black uppercase tracking-widest text-text-muted border-b border-border">
                     <tr>
                         <th className="px-6 py-4">Event</th>
                         <th className="px-6 py-4">Action</th>
@@ -40,11 +40,11 @@ export function TradeHistory({ userId }: TradeHistoryProps) {
                         <th className="px-6 py-4 text-right">Date</th>
                     </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-800/50">
-                    {activity.map((trade) => (
-                        <tr key={trade.id} className="hover:bg-gray-900/30 transition-colors group">
+                <tbody className="divide-y divide-border/50">
+                    {activity.map((trade: any) => (
+                        <tr key={trade.id} className="hover:bg-surface-raised/50 transition-colors group">
                             <td className="px-6 py-4">
-                                <span className="text-sm font-bold text-white group-hover:text-indigo-400 transition-colors line-clamp-1">
+                                <span className="text-sm font-bold text-text group-hover:text-primary transition-colors line-clamp-1">
                                     {trade.markets.title}
                                 </span>
                             </td>
@@ -62,13 +62,13 @@ export function TradeHistory({ userId }: TradeHistoryProps) {
                                 </div>
                             </td>
                             <td className="px-6 py-4">
-                                <span className="text-sm font-bold text-gray-300">{trade.price}¢</span>
+                                <span className="text-sm font-bold text-text-muted">{trade.price}¢</span>
                             </td>
                             <td className="px-6 py-4">
-                                <span className="text-sm font-black text-white">{formatPred(trade.cost)}</span>
+                                <span className="text-sm font-black text-text">{formatPred(trade.cost)}</span>
                             </td>
                             <td className="px-6 py-4 text-right">
-                                <span className="text-xs font-bold text-gray-500 uppercase">{formatDate(trade.created_at)}</span>
+                                <span className="text-xs font-bold text-text-muted uppercase">{formatDate(trade.created_at)}</span>
                             </td>
                         </tr>
                     ))}

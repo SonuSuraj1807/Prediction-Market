@@ -26,8 +26,8 @@ export function ProfileStats({ stats }: ProfileStatsProps) {
             label: 'Total Trades',
             value: stats.tradesCount.toString(),
             icon: BarChart3,
-            color: 'text-indigo-400',
-            bg: 'bg-indigo-500/10',
+            color: 'text-primary',
+            bg: 'bg-primary/10',
         },
         {
             label: 'Win Rate',
@@ -48,13 +48,13 @@ export function ProfileStats({ stats }: ProfileStatsProps) {
     return (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {displayStats.map((stat) => (
-                <div key={stat.label} className="p-6 bg-gray-900 border border-gray-800 rounded-3xl space-y-4">
+                <div key={stat.label} className="p-6 bg-surface-raised border border-border rounded-3xl space-y-4 transition-colors">
                     <div className={`p-2 w-fit rounded-xl ${stat.bg}`}>
                         <stat.icon className={`w-5 h-5 ${stat.color}`} />
                     </div>
                     <div>
-                        <div className="text-2xl font-black text-white">{stat.value}</div>
-                        <div className="text-[10px] font-bold text-gray-500 uppercase tracking-widest leading-none mt-1">
+                        <div className="text-2xl font-black text-text">{stat.value}</div>
+                        <div className="text-[10px] font-bold text-text-muted uppercase tracking-widest leading-none mt-1">
                             {stat.label}
                         </div>
                     </div>

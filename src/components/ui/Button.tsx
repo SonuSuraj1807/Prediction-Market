@@ -14,14 +14,14 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
                 ref={ref}
                 disabled={disabled || isLoading}
                 className={cn(
-                    'inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed',
+                    'inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-surface disabled:opacity-50 disabled:cursor-not-allowed',
                     // Variants
-                    variant === 'primary' && 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-500 hover:to-purple-500 focus:ring-indigo-500 shadow-lg shadow-indigo-500/20',
-                    variant === 'secondary' && 'bg-gray-800 text-gray-200 border border-gray-700 hover:bg-gray-700 focus:ring-gray-500',
-                    variant === 'ghost' && 'text-gray-400 hover:text-white hover:bg-gray-800/50 focus:ring-gray-500',
-                    variant === 'destructive' && 'bg-red-600/20 text-red-400 border border-red-800 hover:bg-red-600/30 focus:ring-red-500',
-                    variant === 'yes' && 'bg-emerald-600/20 text-emerald-400 border border-emerald-700 hover:bg-emerald-600/30 focus:ring-emerald-500',
-                    variant === 'no' && 'bg-rose-600/20 text-rose-400 border border-rose-700 hover:bg-rose-600/30 focus:ring-rose-500',
+                    variant === 'primary' && 'bg-primary text-white hover:bg-primary-light focus:ring-primary shadow-lg shadow-primary/20',
+                    variant === 'secondary' && 'bg-surface-raised text-text border border-border hover:bg-surface-higher focus:ring-text-muted',
+                    variant === 'ghost' && 'text-text-muted hover:text-text hover:bg-surface-raised focus:ring-text-muted',
+                    variant === 'destructive' && 'bg-red-600/20 text-red-400 border border-red-800/50 hover:bg-red-600/30 focus:ring-red-500',
+                    variant === 'yes' && 'bg-emerald-600/20 text-emerald-400 border border-emerald-700/50 hover:bg-emerald-600/30 focus:ring-emerald-500',
+                    variant === 'no' && 'bg-rose-600/20 text-rose-400 border border-rose-700/50 hover:bg-rose-600/30 focus:ring-rose-500',
                     // Sizes
                     size === 'sm' && 'px-3 py-1.5 text-sm',
                     size === 'md' && 'px-4 py-2.5 text-sm',

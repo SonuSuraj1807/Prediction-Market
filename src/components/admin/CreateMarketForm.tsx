@@ -35,36 +35,36 @@ export function CreateMarketForm({ onSuccess }: { onSuccess: () => void }) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4 bg-gray-900 p-6 rounded-xl border border-gray-800">
+        <form onSubmit={handleSubmit} className="space-y-4 bg-surface-raised p-6 rounded-xl border border-border transition-colors">
             <div>
-                <label className="block text-sm font-medium text-gray-400 mb-1">Market Title</label>
+                <label className="block text-sm font-medium text-text-muted mb-1">Market Title</label>
                 <input
                     type="text"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full bg-surface border border-border rounded-lg px-4 py-2 text-text focus:outline-none focus:ring-2 focus:ring-primary placeholder-text-muted/50"
                     required
                     placeholder="Will India win the 2026 World Cup?"
                 />
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-400 mb-1">Description</label>
+                <label className="block text-sm font-medium text-text-muted mb-1">Description</label>
                 <textarea
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 min-h-[100px]"
+                    className="w-full bg-surface border border-border rounded-lg px-4 py-2 text-text focus:outline-none focus:ring-2 focus:ring-primary min-h-[100px] placeholder-text-muted/50"
                     placeholder="Details about the resolution sourcer and criteria..."
                 />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
                 <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-1">Category</label>
+                    <label className="block text-sm font-medium text-text-muted mb-1">Category</label>
                     <select
                         value={category}
                         onChange={(e) => setCategory(e.target.value as Category)}
-                        className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="w-full bg-surface border border-border rounded-lg px-4 py-2 text-text focus:outline-none focus:ring-2 focus:ring-primary"
                     >
                         {CATEGORIES.map((c) => (
                             <option key={c} value={c}>{c}</option>
@@ -72,11 +72,11 @@ export function CreateMarketForm({ onSuccess }: { onSuccess: () => void }) {
                     </select>
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-1">Region</label>
+                    <label className="block text-sm font-medium text-text-muted mb-1">Region</label>
                     <select
                         value={region}
                         onChange={(e) => setRegion(e.target.value as Region)}
-                        className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="w-full bg-surface border border-border rounded-lg px-4 py-2 text-text focus:outline-none focus:ring-2 focus:ring-primary"
                     >
                         {REGIONS.map((r) => (
                             <option key={r} value={r}>{r}</option>
@@ -86,12 +86,12 @@ export function CreateMarketForm({ onSuccess }: { onSuccess: () => void }) {
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-400 mb-1">Resolves At</label>
+                <label className="block text-sm font-medium text-text-muted mb-1">Resolves At</label>
                 <input
                     type="datetime-local"
                     value={resolvesAt}
                     onChange={(e) => setResolvesAt(e.target.value)}
-                    className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full bg-surface border border-border rounded-lg px-4 py-2 text-text focus:outline-none focus:ring-2 focus:ring-primary"
                     required
                 />
             </div>
@@ -102,9 +102,9 @@ export function CreateMarketForm({ onSuccess }: { onSuccess: () => void }) {
                     id="isFeatured"
                     checked={isFeatured}
                     onChange={(e) => setIsFeatured(e.target.checked)}
-                    className="w-4 h-4 rounded border-gray-800 bg-gray-950 text-indigo-600 focus:ring-indigo-500"
+                    className="w-4 h-4 rounded border-border bg-surface text-primary focus:ring-primary"
                 />
-                <label htmlFor="isFeatured" className="text-sm font-medium text-gray-400">Featured Market</label>
+                <label htmlFor="isFeatured" className="text-sm font-medium text-text-muted">Featured Market</label>
             </div>
 
             <Button

@@ -18,17 +18,17 @@ export function HoldingsList({ }: HoldingsListProps) {
     if (isLoading) {
         return (
             <div className="flex flex-col items-center justify-center py-20">
-                <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
+                <Loader2 className="w-8 h-8 text-primary animate-spin" />
             </div>
         );
     }
 
     if (!positions || positions.length === 0) {
         return (
-            <div className="p-12 text-center bg-gray-900/40 border border-gray-800 rounded-[3rem]">
+            <div className="p-12 text-center bg-surface-raised border border-border rounded-[3rem]">
                 <div className="text-4xl mb-4">📈</div>
-                <h3 className="text-white font-bold text-lg">No active positions</h3>
-                <p className="text-gray-500 text-sm mt-1">Start predicting to see your holdings here.</p>
+                <h3 className="text-text font-bold text-lg">No active positions</h3>
+                <p className="text-text-muted text-sm mt-1">Start predicting to see your holdings here.</p>
             </div>
         );
     }

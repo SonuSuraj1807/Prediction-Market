@@ -30,8 +30,8 @@ export function MarketGrid({ filters }: MarketGridProps) {
     if (isLoading) {
         return (
             <div className="flex flex-col items-center justify-center py-20 space-y-4">
-                <Loader2 className="w-10 h-10 text-indigo-500 animate-spin" />
-                <p className="text-gray-500 font-medium">Fetching markets...</p>
+                <Loader2 className="w-10 h-10 text-primary animate-spin" />
+                <p className="text-text-muted font-medium">Fetching markets...</p>
             </div>
         );
     }
@@ -46,10 +46,10 @@ export function MarketGrid({ filters }: MarketGridProps) {
 
     if (!data || data.markets.length === 0) {
         return (
-            <div className="bg-gray-900/50 border border-gray-800 rounded-3xl p-16 text-center space-y-4">
+            <div className="bg-surface-raised border border-border rounded-3xl p-16 text-center space-y-4">
                 <div className="text-4xl">🔍</div>
-                <h3 className="text-xl font-bold text-white">No markets found</h3>
-                <p className="text-gray-500 max-w-xs mx-auto">Try adjusting your filters or search terms to find what you&apos;re looking for.</p>
+                <h3 className="text-xl font-bold text-text">No markets found</h3>
+                <p className="text-text-muted max-w-xs mx-auto">Try adjusting your filters or search terms to find what you&apos;re looking for.</p>
             </div>
         );
     }
@@ -82,8 +82,8 @@ export function MarketGrid({ filters }: MarketGridProps) {
                                 key={i}
                                 onClick={() => setPage(i + 1)}
                                 className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${page === i + 1
-                                    ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20'
-                                    : 'text-gray-500 hover:text-white hover:bg-gray-800'
+                                    ? 'bg-primary text-white shadow-lg shadow-primary/20'
+                                    : 'text-text-muted hover:text-text hover:bg-surface-raised'
                                     }`}
                             >
                                 {i + 1}

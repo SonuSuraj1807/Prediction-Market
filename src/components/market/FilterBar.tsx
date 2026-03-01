@@ -23,12 +23,12 @@ export function FilterBar({ filters, setFilters }: FilterBarProps) {
             {/* Search Bar */}
             <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <Search className="h-5 w-5 text-gray-500 group-focus-within:text-indigo-500 transition-colors" />
+                    <Search className="h-5 w-5 text-text-muted group-focus-within:text-primary transition-colors" />
                 </div>
                 <input
                     type="text"
                     placeholder="Search markets (e.g. World Cup, Elections, Fed Rate...)"
-                    className="block w-full pl-11 pr-4 py-4 bg-gray-950 border border-gray-800 rounded-2xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all shadow-inner"
+                    className="block w-full pl-11 pr-4 py-4 bg-surface border border-border rounded-2xl text-text placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all shadow-inner"
                     value={filters.search || ''}
                     onChange={(e) => setFilters({ ...filters, search: e.target.value })}
                 />
@@ -45,8 +45,8 @@ export function FilterBar({ filters, setFilters }: FilterBarProps) {
                                 setFilters(newFilters);
                             }}
                             className={`px-4 py-2 rounded-xl text-sm font-bold border transition-all ${!filters.category
-                                ? 'bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-500/20'
-                                : 'bg-gray-900 border-gray-800 text-gray-400 hover:border-gray-700 hover:text-white'
+                                ? 'bg-primary border-primary-light text-white shadow-lg shadow-primary/20'
+                                : 'bg-surface-raised border-border text-text-muted hover:border-primary/50 hover:text-text'
                                 }`}
                         >
                             All Topics
@@ -56,8 +56,8 @@ export function FilterBar({ filters, setFilters }: FilterBarProps) {
                                 key={cat}
                                 onClick={() => setFilters({ ...filters, category: cat })}
                                 className={`px-4 py-2 rounded-xl text-sm font-bold border transition-all flex items-center gap-2 ${filters.category === cat
-                                    ? 'bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-500/20'
-                                    : 'bg-gray-900 border-gray-800 text-gray-400 hover:border-gray-700 hover:text-white'
+                                    ? 'bg-primary border-primary-light text-white shadow-lg shadow-primary/20'
+                                    : 'bg-surface-raised border-border text-text-muted hover:border-primary/50 hover:text-text'
                                     }`}
                             >
                                 <span>{CATEGORY_DISPLAY[cat]?.emoji}</span>
@@ -70,10 +70,10 @@ export function FilterBar({ filters, setFilters }: FilterBarProps) {
                 {/* Region Filter */}
                 <div className="relative min-w-[180px]">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <Globe className="h-4 w-4 text-gray-500" />
+                        <Globe className="h-4 w-4 text-text-muted" />
                     </div>
                     <select
-                        className="block w-full pl-10 pr-4 py-2 bg-gray-900 border border-gray-800 rounded-xl text-sm font-bold text-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 appearance-none cursor-pointer"
+                        className="block w-full pl-10 pr-4 py-2 bg-surface-raised border border-border rounded-xl text-sm font-bold text-text focus:outline-none focus:ring-2 focus:ring-primary/50 appearance-none cursor-pointer"
                         value={filters.region || ''}
                         onChange={(e) => setFilters({ ...filters, region: (e.target.value as Region) || undefined })}
                     >
