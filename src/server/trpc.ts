@@ -16,29 +16,34 @@ export interface Context {
  * In a real setup, this extracts the user from the JWT cookie.
  */
 export async function createContext(opts: { headers: Headers }): Promise<Context> {
-    const supabase = createServiceClient();
+    try {
+        const supabase = createServiceClient();
 
-    // Extract user from Authorization header or cookie
-    const authHeader = opts.headers.get('authorization');
-    let userId: string | null = null;
-    let userRole: string | null = null;
+        // Extract user from Authorization header or cookie
+        const authHeader = opts.headers.get('authorization');
+        let userId: string | null = null;
+        let userRole: string | null = null;
 
-    if (authHeader?.startsWith('Bearer ')) {
-        const token = authHeader.slice(7);
-        const { data: { user } } = await supabase.auth.getUser(token);
-        if (user) {
-            userId = user.id;
-            // Fetch role from users table
-            const { data } = await supabase
-                .from('users')
-                .select('role')
-                .eq('id', user.id)
-                .single();
-            userRole = data?.role ?? 'user';
+        if (authHeader?.startsWith('Bearer ')) {
+            const token = authHeader.slice(7);
+            const { data: { user } } = await supabase.auth.getUser(token);
+            if (user) {
+                userId = user.id;
+                // Fetch role from users table
+                const { data } = await supabase
+                    .from('users')
+                    .select('role')
+                    .eq('id', user.id)
+                    .single();
+                userRole = data?.role ?? 'user';
+            }
         }
-    }
 
-    return { supabase, userId, userRole };
+        return { supabase, userId, userRole };
+    } catch (error) {
+        console.error('TRPC createContext Error:', error);
+        throw error;
+    }
 }
 
 const t = initTRPC.context<Context>().create();

@@ -31,7 +31,10 @@ export const marketRouter = router({
                 .range(offset, offset + input.limit - 1);
 
             const { data, count, error } = await query;
-            if (error) throw error;
+            if (error) {
+                console.error('Market List Error:', error);
+                throw error;
+            }
 
             return {
                 markets: data ?? [],
