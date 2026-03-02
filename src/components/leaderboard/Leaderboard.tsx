@@ -29,52 +29,47 @@ export function Leaderboard() {
     }
 
     return (
-        <div className="bg-surface border border-border rounded-3xl overflow-hidden backdrop-blur-sm transition-colors">
+        <div className="card-modern overflow-hidden">
             <div className="overflow-x-auto">
                 <table className="w-full text-left">
                     <thead>
-                        <tr className="bg-surface-raised border-b border-border">
-                            <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-text-muted">Rank</th>
-                            <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-text-muted">Predictor</th>
-                            <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-text-muted text-right">Balance</th>
+                        <tr className="bg-surface-raised/50 border-b border-border">
+                            <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-text-muted">Rank</th>
+                            <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-text-muted">Predictor</th>
+                            <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-text-muted text-right">Balance</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-border">
+                    <tbody className="divide-y divide-border/50">
                         {leaderboard.map((user, index) => {
                             const rank = index + 1;
                             return (
                                 <tr key={user.id} className="hover:bg-primary/5 transition-colors group">
-                                    <td className="px-6 py-5">
-                                        <div className="flex items-center justify-center w-8 h-8 rounded-full font-bold text-sm">
-                                            {rank === 1 ? <Trophy className="w-5 h-5 text-yellow-500" /> :
-                                                rank === 2 ? <Medal className="w-5 h-5 text-gray-400" /> :
-                                                    rank === 3 ? <Medal className="w-5 h-5 text-amber-600" /> :
-                                                        <span className="text-text-muted">{rank}</span>}
+                                    <td className="px-6 py-4">
+                                        <div className="flex items-center gap-3">
+                                            <div className="flex items-center justify-center w-6 h-6 rounded font-bold text-xs">
+                                                {rank === 1 ? <Trophy className="w-4 h-4 text-emerald-400" /> :
+                                                    rank === 2 ? <Medal className="w-4 h-4 text-primary" /> :
+                                                        rank === 3 ? <Medal className="w-4 h-4 text-text-muted" /> :
+                                                            <span className="text-[10px] font-bold text-text-muted/60">{rank}</span>}
+                                            </div>
                                         </div>
                                     </td>
-                                    <td className="px-6 py-5">
+                                    <td className="px-6 py-4">
                                         <Link href={`/profile/${user.id}`} className="flex items-center gap-3 group/link">
-                                            <div className="w-10 h-10 rounded-xl bg-surface-higher flex items-center justify-center text-text-muted font-bold border border-border group-hover/link:border-primary transition-all overflow-hidden">
+                                            <div className="w-8 h-8 rounded-lg bg-surface-raised flex items-center justify-center text-text-muted font-bold border border-border group-hover/link:border-primary transition-all overflow-hidden">
                                                 {user.avatar_url ? (
                                                     <img src={user.avatar_url} alt={user.display_name} className="w-full h-full object-cover" />
                                                 ) : (
-                                                    <User className="w-5 h-5" />
+                                                    <User className="w-4 h-4" />
                                                 )}
                                             </div>
-                                            <div>
-                                                <div className="text-text font-bold group-hover/link:text-primary transition-colors uppercase tracking-tight">
-                                                    {user.display_name}
-                                                </div>
-                                                {rank <= 3 && (
-                                                    <div className="text-[10px] text-primary/80 font-bold uppercase tracking-widest">
-                                                        Top Performer
-                                                    </div>
-                                                )}
+                                            <div className="text-xs font-bold text-text group-hover/link:text-primary transition-colors tracking-tight">
+                                                {user.display_name}
                                             </div>
                                         </Link>
                                     </td>
-                                    <td className="px-6 py-5 text-right">
-                                        <div className="text-lg font-black text-text group-hover:text-primary transition-colors">
+                                    <td className="px-6 py-4 text-right">
+                                        <div className="text-sm font-bold text-text tabular-nums group-hover:text-primary transition-colors">
                                             {formatPred(user.balance || 0)}
                                         </div>
                                     </td>

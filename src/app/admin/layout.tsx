@@ -12,9 +12,9 @@ export default function AdminLayout({
             <aside className="w-64 border-r border-border p-6 flex flex-col gap-6 bg-surface-raised/50 backdrop-blur-xl">
                 <div className="flex items-center gap-2 px-2">
                     <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center font-bold text-white shadow-lg shadow-primary/20">
-                        E
+                        P
                     </div>
-                    <span className="text-xl font-bold tracking-tight text-text">Eventix Admin</span>
+                    <span className="text-xl font-bold tracking-tight text-text">PRED Admin</span>
                 </div>
 
                 <nav className="flex flex-col gap-1">

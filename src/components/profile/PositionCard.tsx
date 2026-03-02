@@ -31,42 +31,42 @@ export function PositionCard({ position }: PositionCardProps) {
     return (
         <Link
             href={`/markets/${position.market_id}`}
-            className="p-6 bg-surface-raised border border-border rounded-[2rem] hover:border-primary/30 transition-all group flex flex-col sm:flex-row sm:items-center justify-between gap-6"
+            className="card-modern p-4 hover:border-primary/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-surface/30"
         >
-            <div className="space-y-2 flex-1">
-                <div className="flex items-center gap-3">
-                    <span className={`px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase ${position.side === 'YES' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-rose-500/10 text-rose-500'
+            <div className="flex-1 space-y-1.5">
+                <div className="flex items-center gap-2">
+                    <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold tracking-widest uppercase ${position.side === 'YES' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-rose-500/10 text-rose-500'
                         }`}>
                         {position.side}
                     </span>
-                    <h3 className="text-text font-bold group-hover:text-primary transition-colors line-clamp-1">
+                    <h3 className="text-xs font-bold text-text group-hover:text-primary transition-colors line-clamp-1 uppercase tracking-tight">
                         {position.markets.title}
                     </h3>
                 </div>
 
-                <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-text-muted">
-                    <div>{position.shares} Shares</div>
-                    <div className="w-1.5 h-1.5 rounded-full bg-border" />
-                    <div>Avg {position.avg_price}¢</div>
+                <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-text-muted">
+                    <span className="tabular-nums">{position.shares} Shares</span>
+                    <div className="w-1 h-1 rounded-full bg-border" />
+                    <span>Avg {position.avg_price}¢</span>
                 </div>
             </div>
 
-            <div className="flex items-center gap-8 sm:text-right border-t sm:border-t-0 border-border pt-6 sm:pt-0">
-                <div>
-                    <div className="text-xl font-black text-text">
+            <div className="flex items-center justify-between sm:justify-end gap-6 sm:text-right">
+                <div className="space-y-0.5">
+                    <div className="text-sm font-bold text-text tabular-nums">
                         {formatPred(currentValue)}
                     </div>
-                    <div className="text-[10px] font-bold text-text-muted uppercase tracking-widest">
-                        Market Value
+                    <div className="text-[9px] font-bold text-text-muted uppercase tracking-widest leading-none">
+                        Value
                     </div>
                 </div>
 
-                <div className="min-w-[80px]">
-                    <div className={`flex items-center sm:justify-end gap-1 text-lg font-black ${isProfit ? 'text-emerald-500' : 'text-rose-500'}`}>
-                        {isProfit ? <ArrowUpRight className="w-4 h-4" /> : <ArrowDownRight className="w-4 h-4" />}
+                <div className="min-w-[70px] space-y-0.5">
+                    <div className={`flex items-center sm:justify-end gap-1 text-sm font-bold tabular-nums ${isProfit ? 'text-emerald-500' : 'text-rose-500'}`}>
+                        {isProfit ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
                         {Math.abs(profitPercent).toFixed(1)}%
                     </div>
-                    <div className={`text-[10px] font-bold uppercase tracking-widest ${isProfit ? 'text-emerald-500/50' : 'text-rose-500/50'}`}>
+                    <div className={`text-[9px] font-bold uppercase tracking-widest tabular-nums ${isProfit ? 'text-emerald-500/60' : 'text-rose-500/60'}`}>
                         {isProfit ? '+' : ''}{formatPred(profit)}
                     </div>
                 </div>

@@ -11,61 +11,65 @@ export default function LeaderboardPage() {
         <div className="min-h-screen flex flex-col bg-surface transition-colors">
             <Navbar />
 
-            <main className="flex-1 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full space-y-12">
+            <main className="flex-1 container-polymarket py-12 space-y-12">
                 {/* Page Header */}
-                <div className="text-center space-y-4">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-yellow-500/10 border border-yellow-500/20 rounded-full text-xs font-bold text-yellow-500 uppercase tracking-widest">
+                <div className="space-y-4">
+                    <div className="inline-flex items-center gap-2 px-2 py-0.5 bg-primary/10 border border-primary/20 rounded-md text-[10px] font-bold text-primary uppercase tracking-widest">
                         <Trophy className="w-3 h-3" />
-                        Global Rankings
+                        Live Rankings
                     </div>
-                    <h1 className="text-5xl font-black text-text tracking-tighter">
-                        THE <span className="bg-gradient-to-r from-primary via-purple-400 to-pink-400 bg-clip-text text-transparent">ELITE</span> LIST
+                    <h1 className="text-4xl font-extrabold text-text tracking-tight uppercase">
+                        Global <span className="text-text-muted">Leaderboard</span>
                     </h1>
-                    <p className="text-text-muted max-w-2xl mx-auto text-lg">
-                        Behold the top predictors on Eventix. Rankings are updated in real-time based on current PRED coin balances.
+                    <p className="text-text-muted max-w-2xl text-sm font-medium leading-relaxed">
+                        The top forecasters on {APP_NAME}. Rankings are calculated in real-time based on total PRED balance and historical accuracy.
                     </p>
                 </div>
 
-                {/* Stats Preview */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="p-6 bg-surface-raised border border-border rounded-3xl space-y-2">
-                        <div className="p-2 bg-primary/10 w-fit rounded-xl">
-                            <TrendingUp className="w-5 h-5 text-primary" />
+                {/* Stats Preview - Dense cards */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {[
+                        { label: 'Cumulative Volume', value: '420.5k PRED', icon: TrendingUp, color: 'text-primary' },
+                        { label: 'Total Predictions', value: '5,000+', icon: Sparkles, color: 'text-purple-400' },
+                        { label: 'Top Accuracy', value: '88.4%', icon: Trophy, color: 'text-amber-500' },
+                    ].map((stat) => (
+                        <div key={stat.label} className="card-modern p-5 flex items-center gap-4 bg-surface/50">
+                            <div className={`p-2 rounded-xl bg-surface-raised border border-border ${stat.color}`}>
+                                <stat.icon className="w-5 h-5" />
+                            </div>
+                            <div>
+                                <div className="text-[10px] font-bold text-text-muted uppercase tracking-widest leading-none mb-1.5">{stat.label}</div>
+                                <div className="text-lg font-bold text-text tabular-nums">{stat.value}</div>
+                            </div>
                         </div>
-                        <div className="text-2xl font-bold text-text">5,000+</div>
-                        <div className="text-xs font-bold text-text-muted uppercase tracking-wider">Total Predictions</div>
-                    </div>
-                    <div className="p-6 bg-surface-raised border border-border rounded-3xl space-y-2">
-                        <div className="p-2 bg-purple-500/10 w-fit rounded-xl">
-                            <Sparkles className="w-5 h-5 text-purple-400" />
-                        </div>
-                        <div className="text-2xl font-bold text-text">420.5k</div>
-                        <div className="text-xs font-bold text-text-muted uppercase tracking-wider">Volume Traded</div>
-                    </div>
-                    <div className="p-6 bg-surface-raised border border-border rounded-3xl space-y-2">
-                        <div className="p-2 bg-yellow-500/10 w-fit rounded-xl">
-                            <Trophy className="w-5 h-5 text-yellow-500" />
-                        </div>
-                        <div className="text-2xl font-bold text-text">12</div>
-                        <div className="text-xs font-bold text-text-muted uppercase tracking-wider">Grand Champions</div>
-                    </div>
+                    ))}
                 </div>
 
                 {/* Leaderboard Table */}
-                <Leaderboard />
-
-                {/* Call to Action */}
-                <div className="p-12 bg-primary rounded-[3rem] text-center space-y-6 relative overflow-hidden shadow-2xl shadow-primary/20">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32" />
-                    <div className="relative z-10">
-                        <h2 className="text-3xl font-bold text-white">Think you can do better?</h2>
-                        <p className="text-white/80 max-w-md mx-auto mb-8">
-                            Start trading now and climb the ranks. Every accurate prediction counts towards your global standing.
-                        </p>
-                        <button className="px-8 py-4 bg-white text-primary rounded-2xl font-bold text-lg hover:bg-gray-100 transition-all shadow-xl">
-                            Claim Your Spot
-                        </button>
+                <div className="space-y-4">
+                    <div className="flex items-center justify-between px-1">
+                        <h2 className="text-xs font-bold text-text-muted uppercase tracking-widest flex items-center gap-2">
+                            Full Standings
+                        </h2>
+                        <span className="text-[10px] font-bold text-text-muted uppercase">Showing Top 50</span>
                     </div>
+                    <Leaderboard />
+                </div>
+
+                {/* Call to Action - Subtle section */}
+                <div className="card-modern p-10 bg-gradient-to-r from-primary/10 via-surface-raised to-transparent border-primary/20 flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div className="space-y-2 text-center md:text-left">
+                        <h2 className="text-2xl font-bold text-text tracking-tight uppercase">Think you can do better?</h2>
+                        <p className="text-sm text-text-muted font-medium max-w-sm">
+                            Every accurate prediction moves you up the ranks. Start trading and prove your skills.
+                        </p>
+                    </div>
+                    <Link
+                        href="/markets"
+                        className="px-8 py-3 bg-primary text-white rounded-xl text-sm font-bold hover:bg-primary-dark transition-all shadow-lg shadow-primary/20 whitespace-nowrap"
+                    >
+                        Start Predicting Now
+                    </Link>
                 </div>
             </main>
 

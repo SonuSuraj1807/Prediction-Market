@@ -190,6 +190,49 @@ body {
   background: linear-gradient(to right, transparent var(--yes-percent), rgba(0, 0, 0, 0.6) var(--yes-percent));
 }
 
+/* ─── Modern Structural Utilities ────────────────── */
+.card-modern {
+  background-color: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-modern:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.5);
+}
+
+.btn-modern {
+  border-radius: 0.625rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.input-modern {
+  background-color: var(--color-surface-higher);
+  border: 1px solid var(--color-border);
+  border-radius: 0.625rem;
+  padding: 0.625rem 1rem;
+  color: var(--color-text);
+  transition: border-color 0.2s ease;
+}
+
+.input-modern:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+/* ─── Layout Helpers ─────────────────────────────── */
+.container-polymarket {
+  max-width: 1300px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 /* ─── Glass Effect ───────────────────────────────── */
 .glass {
   background: color-mix(in srgb, var(--color-surface), transparent 40%);

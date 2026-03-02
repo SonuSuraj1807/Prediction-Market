@@ -23,31 +23,41 @@ export default function MarketsPage() {
         <div className="min-h-screen flex flex-col bg-surface transition-colors">
             <Navbar />
 
-            <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full space-y-12">
-                {/* Page Header */}
-                <div className="space-y-4">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-xs font-bold text-primary uppercase tracking-widest">
-                        <Sparkles className="w-3 h-3" />
-                        Active Markets
+            <main className="flex-1 container-polymarket py-8 space-y-8">
+                {/* Minimal Header */}
+                <div className="flex items-end justify-between border-b border-border pb-4">
+                    <div className="space-y-1">
+                        <h1 className="text-2xl font-bold text-text tracking-tight flex items-center gap-2">
+                            Explore Markets
+                        </h1>
+                        <p className="text-sm text-text-muted font-medium">
+                            Discover and trade on real-world events using PRED.
+                        </p>
                     </div>
-                    <h1 className="text-4xl font-bold text-text tracking-tight">
-                        Predict the <span className="text-text-muted italic">Unpredictable</span>
-                    </h1>
-                    <p className="text-text-muted max-w-2xl">
-                        Join the collective intelligence. Research, trade, and win PRED coins by forecasting real-world outcomes across sports, tech, and global events.
-                    </p>
+                    <div className="hidden sm:flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-text-muted bg-surface-raised px-2 py-1 rounded border border-border">
+                        <TrendingUp className="w-3 h-3 text-rose-500" />
+                        Live Predictions
+                    </div>
                 </div>
 
-                {/* Filter & Search Bar */}
-                <FilterBar filters={filters} setFilters={setFilters} />
+                {/* Grid vs sidebar */}
+                <div className="flex flex-col lg:flex-row gap-8">
+                    {/* Sidebar */}
+                    <FilterBar filters={filters} setFilters={setFilters} />
 
-                {/* Market Grid */}
-                <div className="space-y-6">
-                    <div className="flex items-center gap-2 text-text-muted font-bold text-xs uppercase tracking-tighter">
-                        <TrendingUp className="w-4 h-4" />
-                        Trending Markets
+                    {/* Market List */}
+                    <div className="flex-1 space-y-6">
+                        <div className="flex items-center justify-between">
+                            <h2 className="text-xs font-bold uppercase tracking-tighter text-text-muted flex items-center gap-2">
+                                <Sparkles className="w-3.5 h-3.5 text-primary" />
+                                Trending Predictions
+                            </h2>
+                            <div className="text-[10px] text-text-muted font-mono">
+                                {filters.search ? `Results for "${filters.search}"` : 'Showing all'}
+                            </div>
+                        </div>
+                        <MarketGrid filters={filters} />
                     </div>
-                    <MarketGrid filters={filters} />
                 </div>
             </main>
 

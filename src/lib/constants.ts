@@ -28,7 +28,7 @@ export const LEADERBOARD_REFRESH_INTERVAL_MS = 15 * 60 * 1000; // 15 min
 
 // ─── Categories & Regions ────────────────────────────────
 export const CATEGORIES = [
-    'economy', 'sports', 'tech', 'climate', 'policy', 'global', 'entertainment',
+    'politics', 'sports', 'crypto', 'finance', 'geopolitics', 'tech', 'entertainment',
 ] as const;
 
 export const REGIONS = [
@@ -39,6 +39,6 @@ export type Category = typeof CATEGORIES[number];
 export type Region = typeof REGIONS[number];
 
 // ─── App Meta ────────────────────────────────────────────
-export const APP_NAME = 'Eventix';
-export const APP_DESCRIPTION = 'Trade on real-world events with virtual currency. Test your prediction skills.';
-export const APP_URL = 'https://eventix.in';
+export const APP_NAME = 'PRED';
+export const APP_DESCRIPTION = 'Global prediction markets using virtual currency. Profit from your knowledge.';
+export const APP_URL = 'https://pred.in';

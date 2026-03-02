@@ -1,5 +1,5 @@
 import { initTRPC, TRPCError } from '@trpc/server';
-import { createServiceClient } from '@/lib/supabase/server';
+import { createClient, createServiceClient } from '@/lib/supabase/server';
 
 /**
  * tRPC context — attached to every procedure call.
@@ -13,36 +13,58 @@ export interface Context {
 
 /**
  * Create context for each tRPC request.
- * In a real setup, this extracts the user from the JWT cookie.
+ * Uses Supabase SSR to extract the user from cookies.
  */
-export async function createContext(opts: { headers: Headers }): Promise<Context> {
+export async function createContext(_opts: { headers: Headers }): Promise<Context> {
     try {
-        const supabase = createServiceClient();
+        const serviceClient = createServiceClient();
+        const cookieClient = await createClient();
 
-        // Extract user from Authorization header or cookie
-        const authHeader = opts.headers.get('authorization');
+        const { data: { user } } = await cookieClient.auth.getUser();
+
         let userId: string | null = null;
         let userRole: string | null = null;
 
-        if (authHeader?.startsWith('Bearer ')) {
-            const token = authHeader.slice(7);
-            const { data: { user } } = await supabase.auth.getUser(token);
-            if (user) {
-                userId = user.id;
-                // Fetch role from users table
-                const { data } = await supabase
+        if (user) {
+            userId = user.id;
+            // Fetch role from users table using service client
+            const { data: profile } = await serviceClient
+                .from('users')
+                .select('role')
+                .eq('id', user.id)
+                .maybeSingle();
+
+            if (profile) {
+                userRole = profile.role ?? 'user';
+            } else {
+                // Profile doesn't exist yet (trigger may have failed/delayed).
+                // Create it defensively so FK constraints don't break trades.
+                const displayName =
+                    user.user_metadata?.display_name ??
+                    user.user_metadata?.full_name ??
+                    user.email?.split('@')[0] ??
+                    `User_${user.id.slice(0, 8)}`;
+
+                await serviceClient
                     .from('users')
-                    .select('role')
-                    .eq('id', user.id)
-                    .single();
-                userRole = data?.role ?? 'user';
+                    .upsert({
+                        id: user.id,
+                        email: user.email ?? '',
+                        display_name: displayName.length >= 2 ? displayName : displayName + '_UX',
+                    }, { onConflict: 'id' });
+
+                userRole = 'user';
             }
         }
 
-        return { supabase, userId, userRole };
+        return { supabase: serviceClient, userId, userRole };
     } catch (error) {
         console.error('TRPC createContext Error:', error);
-        throw error;
+        return {
+            supabase: createServiceClient(),
+            userId: null,
+            userRole: null
+        };
     }
 }
 

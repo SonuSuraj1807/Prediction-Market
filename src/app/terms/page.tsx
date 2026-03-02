@@ -6,8 +6,8 @@ export default function TermsPage() {
                 <p className="text-gray-400">Last updated: February 2026</p>
 
                 <section className="space-y-4">
-                    <h2 className="text-xl font-semibold">1. Acceptence of Terms</h2>
-                    <p className="text-gray-400">By accessing Eventix, you agree to be bound by these Terms of Service. This is a free-to-play prediction platform for entertainment purposes only.</p>
+                    <h2 className="text-xl font-semibold">1. Acceptance of Terms</h2>
+                    <p className="text-gray-400">By accessing this platform, you agree to be bound by these Terms of Service. This is a free-to-play prediction platform for entertainment purposes only.</p>
                 </section>
 
                 <section className="space-y-4">

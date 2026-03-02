@@ -48,15 +48,13 @@ export function ProfileStats({ stats }: ProfileStatsProps) {
     return (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {displayStats.map((stat) => (
-                <div key={stat.label} className="p-6 bg-surface-raised border border-border rounded-3xl space-y-4 transition-colors">
-                    <div className={`p-2 w-fit rounded-xl ${stat.bg}`}>
-                        <stat.icon className={`w-5 h-5 ${stat.color}`} />
+                <div key={stat.label} className="card-modern p-5 flex flex-col gap-4 bg-surface/50">
+                    <div className={`p-1.5 w-fit rounded-lg ${stat.bg} ${stat.color}`}>
+                        <stat.icon className="w-4 h-4" />
                     </div>
                     <div>
-                        <div className="text-2xl font-black text-text">{stat.value}</div>
-                        <div className="text-[10px] font-bold text-text-muted uppercase tracking-widest leading-none mt-1">
-                            {stat.label}
-                        </div>
+                        <div className="text-[10px] font-bold text-text-muted uppercase tracking-widest leading-none mb-1.5">{stat.label}</div>
+                        <div className="text-xl font-bold text-text tabular-nums">{stat.value}</div>
                     </div>
                 </div>
             ))}

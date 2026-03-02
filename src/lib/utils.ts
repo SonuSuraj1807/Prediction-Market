@@ -63,12 +63,12 @@ export function truncate(text: string, maxLength: number): string {
  * Category display labels & emoji.
  */
 export const CATEGORY_DISPLAY: Record<string, { label: string; emoji: string }> = {
-    economy: { label: 'Economy', emoji: '📈' },
+    politics: { label: 'Politics', emoji: '🏛️' },
     sports: { label: 'Sports', emoji: '🏆' },
+    crypto: { label: 'Crypto', emoji: '🪙' },
+    finance: { label: 'Finance', emoji: '💰' },
+    geopolitics: { label: 'Geopolitics', emoji: '🌏' },
     tech: { label: 'Tech', emoji: '💻' },
-    climate: { label: 'Climate', emoji: '🌍' },
-    policy: { label: 'Policy', emoji: '📜' },
-    global: { label: 'Global', emoji: '🌐' },
     entertainment: { label: 'Entertainment', emoji: '🎬' },
 };
 

@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { formatPercent, formatPred, CATEGORY_DISPLAY } from '@/lib/utils';
+import { formatPercent, formatPred, formatDate, CATEGORY_DISPLAY } from '@/lib/utils';
 import { TradeModal } from './trade-modal';
 import { TrendingUp, Users, Clock } from 'lucide-react';
 
@@ -30,72 +31,58 @@ export function MarketCard({ market }: MarketCardProps) {
 
     return (
         <>
-            <Card className="group hover:border-primary/50 transition-all duration-300 flex flex-col h-full overflow-hidden bg-surface/40 border-border">
-                <div className="p-5 flex-1 space-y-4">
-                    {/* Header */}
-                    <div className="flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface border border-border text-[10px] font-bold uppercase tracking-wider text-text-muted">
-                            <span>{categoryInfo.emoji}</span>
-                            <span>{categoryInfo.label}</span>
-                        </div>
-                        <div className="flex items-center gap-1 text-[10px] text-text-muted font-medium">
+            <Card className="card-modern group flex flex-col sm:flex-row items-center gap-4 p-4 hover:bg-surface-raised/50 transition-colors">
+                {/* Left: Info & Title */}
+                <div className="flex-1 min-w-0 space-y-2">
+                    <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-text-muted">
+                        <span className="px-1.5 py-0.5 rounded bg-surface border border-border">
+                            {categoryInfo.emoji} {categoryInfo.label}
+                        </span>
+                        <span className="flex items-center gap-1">
                             <Clock className="w-3 h-3" />
-                            <span>{new Date(market.resolves_at).toLocaleDateString()}</span>
-                        </div>
+                            {formatDate(market.resolves_at)}
+                        </span>
                     </div>
 
-                    {/* Title */}
-                    <h3 className="text-lg font-bold text-text line-clamp-2 leading-tight group-hover:text-primary transition-colors">
-                        {market.title}
-                    </h3>
+                    <Link href={`/markets/${market.id}`} className="block">
+                        <h3 className="text-base font-bold text-text line-clamp-2 leading-tight group-hover:text-primary transition-colors">
+                            {market.title}
+                        </h3>
+                    </Link>
 
-                    {/* Probability Visual */}
-                    <div className="space-y-2">
-                        <div className="flex items-center justify-between text-xs font-bold">
-                            <span className="text-emerald-400">YES {formatPercent(market.yes_price)}</span>
-                            <span className="text-rose-400">NO {formatPercent(100 - market.yes_price)}</span>
+                    {/* Stats mini */}
+                    <div className="flex items-center gap-4 text-[10px] text-text-muted font-bold">
+                        <div className="flex items-center gap-1">
+                            <TrendingUp className="w-3.5 h-3.5" />
+                            <span>{formatPred(market.total_volume)} VOL.</span>
                         </div>
-                        <div className="h-2 w-full bg-surface-higher rounded-full overflow-hidden flex">
-                            <div
-                                className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 transition-all duration-500"
-                                style={{ width: `${market.yes_price}%` }}
-                            />
-                            <div
-                                className="h-full bg-gradient-to-r from-rose-500 to-rose-600 transition-all duration-500"
-                                style={{ width: `${100 - market.yes_price}%` }}
-                            />
-                        </div>
-                    </div>
-
-                    {/* Stats */}
-                    <div className="grid grid-cols-2 gap-4 pt-2">
-                        <div className="flex items-center gap-2 text-text-muted">
-                            <TrendingUp className="w-4 h-4 text-primary/70" />
-                            <div className="flex flex-col">
-                                <span className="text-[10px] uppercase font-bold tracking-tighter">Volume</span>
-                                <span className="text-xs text-text font-medium">{formatPred(market.total_volume)}</span>
-                            </div>
-                        </div>
-                        <div className="flex items-center gap-2 text-text-muted">
-                            <Users className="w-4 h-4 text-secondary/70" />
-                            <div className="flex flex-col">
-                                <span className="text-[10px] uppercase font-bold tracking-tighter">Traders</span>
-                                <span className="text-xs text-text font-medium">{market.trader_count}</span>
-                            </div>
+                        <div className="flex items-center gap-1">
+                            <Users className="w-3.5 h-3.5" />
+                            <span>{market.trader_count} TRADERS</span>
                         </div>
                     </div>
                 </div>
 
-                {/* Footer / Action */}
-                <div className="px-5 pb-5 mt-auto">
-                    <Button
-                        className="w-full font-bold tracking-wide"
-                        variant="secondary"
+                {/* Right: Actions (YES/NO Buttons) */}
+                <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+                    <button
                         onClick={() => setIsTradeModalOpen(true)}
-                        disabled={market.status !== 'open'}
+                        className="flex-1 sm:w-24 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 hover:bg-emerald-500/20 transition-all group/btn"
                     >
-                        {market.status === 'open' ? 'Trade Now' : 'Market Closed'}
-                    </Button>
+                        <div className="flex flex-col items-center">
+                            <span className="text-[10px] font-bold text-emerald-400 group-hover/btn:scale-95 transition-transform">YES</span>
+                            <span className="text-sm font-bold text-emerald-400">{formatPercent(market.yes_price)}</span>
+                        </div>
+                    </button>
+                    <button
+                        onClick={() => setIsTradeModalOpen(true)}
+                        className="flex-1 sm:w-24 h-10 rounded-lg bg-rose-500/10 border border-rose-500/20 hover:bg-rose-500/20 transition-all group/btn"
+                    >
+                        <div className="flex flex-col items-center">
+                            <span className="text-[10px] font-bold text-rose-400 group-hover/btn:scale-95 transition-transform">NO</span>
+                            <span className="text-sm font-bold text-rose-400">{formatPercent(100 - market.yes_price)}</span>
+                        </div>
+                    </button>
                 </div>
             </Card>
 
