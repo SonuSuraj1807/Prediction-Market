@@ -9,21 +9,19 @@ import type { Database } from '@/lib/supabase/types';
 type User = Database['public']['Tables']['users']['Row'];
 
 export function useAuth() {
+    const [session, setSession] = useState<any>(null);
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
     const supabase = createClient();
 
-    const fetchUser = useCallback(async () => {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session?.user) {
-            const { data } = await supabase
-                .from('users')
-                .select('*')
-                .eq('id', session.user.id)
-                .single(); // Kept .single() as it's crucial for the data type.
+    const fetchUser = useCallback(async (userId: string) => {
+        const { data } = await supabase
+            .from('users')
+            .select('*')
+            .eq('id', userId)
+            .maybeSingle();
+        if (data) {
             setUser(data);
-        } else {
-            setUser(null);
         }
     }, [supabase]);
 
@@ -31,17 +29,26 @@ export function useAuth() {
         let mounted = true;
 
         const init = async () => {
-            await fetchUser();
-            if (mounted) setLoading(false);
+            const { data: { session: initialSession } } = await supabase.auth.getSession();
+            if (mounted) {
+                setSession(initialSession);
+                if (initialSession?.user) {
+                    await fetchUser(initialSession.user.id);
+                }
+                setLoading(false);
+            }
         };
         init();
 
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-            if (session?.user) {
-                fetchUser();
-            } else {
-                setUser(null);
-                if (mounted) setLoading(false);
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, newSession) => {
+            if (mounted) {
+                setSession(newSession);
+                if (newSession?.user) {
+                    fetchUser(newSession.user.id);
+                } else {
+                    setUser(null);
+                }
+                setLoading(false);
             }
         });
 
@@ -53,16 +60,20 @@ export function useAuth() {
 
     const signOut = async () => {
         await supabase.auth.signOut();
+        setSession(null);
         setUser(null);
         window.location.href = '/';
     };
 
+    // Robust display name fallback for when the users table hasn't synced yet
+    const displayName = user?.display_name || session?.user?.email?.split('@')[0] || 'User';
+
     return {
-        user,
+        user: user ? { ...user, display_name: displayName } : (session?.user ? { id: session.user.id, display_name: displayName, balance: 0 } : null),
         loading,
-        isAuthenticated: !!user,
+        isAuthenticated: !!session?.user,
         isAdmin: user?.role === 'admin',
         signOut,
-        refresh: fetchUser,
+        refresh: () => session?.user && fetchUser(session.user.id),
     };
 }

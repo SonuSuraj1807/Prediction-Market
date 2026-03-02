@@ -1,4 +1,4 @@
-import { router, protectedProcedure } from '../trpc';
+import { router, protectedProcedure, publicProcedure } from '../trpc';
 import { z } from 'zod';
 import { TradeInputSchema, SellInputSchema } from '@/lib/validators';
 import { TRPCError } from '@trpc/server';

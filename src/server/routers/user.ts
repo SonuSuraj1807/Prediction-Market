@@ -39,13 +39,10 @@ export const userRouter = router({
                 .from('users')
                 .select('*')
                 .eq('id', input.userId)
-                .single();
+                .maybeSingle();
 
-            if (userError) {
-                throw new TRPCError({
-                    code: 'NOT_FOUND',
-                    message: 'User not found.',
-                });
+            if (userError || !user) {
+                return null;
             }
 
             // Fetch comprehensive stats
@@ -55,13 +52,10 @@ export const userRouter = router({
                 .select('*', { count: 'exact', head: true })
                 .eq('user_id', input.userId);
 
-            // 2. Net Profit (sum of all cost in trades, negative for buy, positive for sell - simplified)
-            // In a real system, this would be more complex (realized vs unrealized)
-            // For now, we'll use the pre-calculated field in the users table from migration 001
+            // 2. Net Profit
             const totalProfit = user.total_profit ?? 0;
 
             // 3. Accuracy / Win Rate
-            // Using accuracy_score from users table
             const accuracy = (user.accuracy_score ?? 0) * 100;
 
             return {
@@ -83,7 +77,7 @@ export const userRouter = router({
             .from('users')
             .select('*')
             .eq('id', ctx.userId)
-            .single();
+            .maybeSingle();
 
         if (error) {
             throw new TRPCError({

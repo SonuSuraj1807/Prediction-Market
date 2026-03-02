@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useParams } from 'next/navigation';
+import { useAuth } from '@/hooks/use-auth';
 import { trpc } from '@/utils/trpc';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
@@ -15,10 +16,18 @@ import { formatDate, formatPred } from '@/lib/utils';
 export default function ProfilePage() {
     const params = useParams();
     const userId = params.userId as string;
+    const { user: currentUser, loading: authLoading } = useAuth();
+    const isOwnProfile = currentUser?.id === userId;
 
-    const { data: profile, isLoading, error } = trpc.user.getProfile.useQuery({ userId });
+    const { data: profile, isLoading, error } = trpc.user.getProfile.useQuery(
+        { userId },
+        {
+            // If it's our own profile and it's missing, poll every second until it appears
+            refetchInterval: (data) => (!data && isOwnProfile) ? 1000 : false,
+        }
+    );
 
-    if (isLoading) {
+    if (isLoading || authLoading) {
         return (
             <div className="min-h-screen flex flex-col bg-surface transition-colors">
                 <Navbar />
@@ -31,6 +40,25 @@ export default function ProfilePage() {
     }
 
     if (error || !profile) {
+        if (isOwnProfile && !error) {
+            return (
+                <div className="min-h-screen flex flex-col bg-surface transition-colors">
+                    <Navbar />
+                    <div className="flex-1 flex flex-col items-center justify-center space-y-6">
+                        <div className="relative">
+                            <div className="absolute inset-0 bg-primary/20 blur-3xl rounded-full animate-pulse" />
+                            <Loader2 className="relative w-16 h-16 text-primary animate-spin" />
+                        </div>
+                        <div className="text-center space-y-2">
+                            <h2 className="text-2xl font-black text-text uppercase tracking-tighter">Setting up your profile</h2>
+                            <p className="text-text-muted max-w-xs mx-auto">We're initializing your predictor account. This will only take a moment...</p>
+                        </div>
+                    </div>
+                    <Footer />
+                </div>
+            );
+        }
+
         return (
             <div className="min-h-screen flex flex-col bg-surface transition-colors">
                 <Navbar />
