@@ -28,7 +28,7 @@ export function FilterBar({ filters, setFilters }: FilterBarProps) {
                     <input
                         type="text"
                         placeholder="Keywords..."
-                        className="w-full input-modern pl-9 h-10 text-sm"
+                        className="w-full input-modern pl-10 h-10 text-sm"
                         value={filters.search || ''}
                         onChange={(e) => setFilters({ ...filters, search: e.target.value })}
                     />

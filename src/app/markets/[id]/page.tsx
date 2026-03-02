@@ -6,6 +6,7 @@ import { trpc } from '@/utils/trpc';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { TradeSidebar } from '@/components/market/TradeSidebar';
+import { PriceChart } from '@/components/market/PriceChart';
 import { Loader2, TrendingUp, Info, Activity, MessageSquare, ChevronLeft } from 'lucide-react';
 import { formatPercent, formatPred, CATEGORY_DISPLAY } from '@/lib/utils';
 import Link from 'next/link';
@@ -97,25 +98,8 @@ export default function MarketDetailPage() {
                                 </div>
                             </div>
 
-                            {/* Main Chart Placeholder / Visualizer */}
-                            <div className="card-modern h-[400px] bg-gradient-to-b from-surface-raised to-surface flex flex-col items-center justify-center p-8 text-center space-y-4">
-                                <Activity className="w-12 h-12 text-primary/20" />
-                                <div className="space-y-2">
-                                    <h3 className="text-sm font-bold text-text">Price History</h3>
-                                    <p className="text-xs text-text-muted max-w-xs">Our advanced charting system is processing historical data for this market.</p>
-                                </div>
-                                {/* Simple Probability Bar as a placeholder */}
-                                <div className="w-full max-w-md space-y-2 pt-4">
-                                    <div className="flex justify-between text-[10px] font-bold text-text-muted uppercase tracking-widest">
-                                        <span>YES {formatPercent(market.yes_price)}</span>
-                                        <span>NO {formatPercent(100 - market.yes_price)}</span>
-                                    </div>
-                                    <div className="h-4 w-full bg-surface border border-border rounded-full overflow-hidden flex">
-                                        <div className="h-full bg-emerald-500" style={{ width: `${market.yes_price}%` }} />
-                                        <div className="h-full bg-rose-500" style={{ width: `${100 - market.yes_price}%` }} />
-                                    </div>
-                                </div>
-                            </div>
+                            {/* Live Price Chart */}
+                            <PriceChart marketId={market.id} currentYesPrice={market.yes_price} />
                         </div>
 
                         {/* Tabs / Content Sections */}

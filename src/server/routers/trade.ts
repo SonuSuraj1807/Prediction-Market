@@ -57,7 +57,7 @@ export const tradeRouter = router({
     /**
      * Get trade history for a market.
      */
-    getHistory: protectedProcedure
+    getHistory: publicProcedure
         .input(z.object({
             marketId: z.string().uuid(),
             limit: z.number().int().min(1).max(100).default(50),

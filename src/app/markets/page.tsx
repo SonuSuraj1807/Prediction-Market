@@ -40,10 +40,30 @@ export default function MarketsPage() {
                     </div>
                 </div>
 
+                {/* Ad Banner */}
+                <div className="w-full rounded-xl border border-dashed border-border/60 bg-surface-raised/30 flex items-center justify-center py-4 px-6">
+                    <div className="flex flex-col items-center gap-1 text-text-muted">
+                        <span className="text-[9px] font-bold uppercase tracking-widest">Sponsored</span>
+                        <div className="text-sm font-medium">Ad Space — 728×90</div>
+                        <span className="text-[10px]">Your advertisement here</span>
+                    </div>
+                </div>
+
                 {/* Grid vs sidebar */}
                 <div className="flex flex-col lg:flex-row gap-8">
                     {/* Sidebar */}
-                    <FilterBar filters={filters} setFilters={setFilters} />
+                    <div className="w-full lg:w-64 shrink-0 space-y-6">
+                        <FilterBar filters={filters} setFilters={setFilters} />
+
+                        {/* Sidebar Ad */}
+                        <div className="rounded-xl border border-dashed border-border/60 bg-surface-raised/30 flex items-center justify-center py-10 px-4">
+                            <div className="flex flex-col items-center gap-1 text-text-muted">
+                                <span className="text-[9px] font-bold uppercase tracking-widest">Sponsored</span>
+                                <div className="text-xs font-medium">Ad Space — 300×250</div>
+                                <span className="text-[10px]">Your advertisement here</span>
+                            </div>
+                        </div>
+                    </div>
 
                     {/* Market List */}
                     <div className="flex-1 space-y-6">
